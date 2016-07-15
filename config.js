@@ -3,11 +3,11 @@ development: {
   url:'http://localhost:3000',
   database: {
       host: 'localhost',
-      port: '27017',
-      db: 'testdb',
+      port: '3306',
+      db: 'horadiversaotests',
       user: 'root',
-      password: 'admin',
-      dialect: 'mysql'
+      password: 'adminadmin',
+      dialect: 'postgres'
   }
 },
 production: {
@@ -18,7 +18,7 @@ production: {
         db: 'dat2hi7sqoj2a',
         user: 'gnsesdgeqyxwlz',
         password: 'ZPitUSahyyI-yXgSWEhVGQMb7Y',
-        dialect: 'mysql'
+        dialect: 'postgres'
     }
 }
 };

@@ -6,12 +6,12 @@ var bodyParser = require('body-parser');    // pull information from HTML POST (
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
 // configuration =================
-var env = process.env.NODE_ENV || 'production';
+var env = process.env.NODE_ENV || 'development';
 var config = require('./config')[env];
 var db = config.database;
 var connection = new Sequelize(db.db, db.user, db.password, {
       host: db.host,
-      dialect: 'mysql'
+      dialect: 'postgres'
 });   // connect to database
 
 
@@ -23,7 +23,9 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.use(methodOverride());
 
 var tables = require('./tables/tables')(connection);
-
+var UserClass = require('./tables/user');
+UserClass.setAdapter(tables);
+var user = new UserClass.User();
 
 //routes
 app.get("/",function(req,res){
@@ -31,7 +33,18 @@ app.get("/",function(req,res){
 		console.log('index');
 });
 
+app.post("/user/create/",function(req,res){
+  var name = req.body.name;
+  var email = req.body.email;
+  var password = req.body.password;
+  var address = req.body.address;
+  var phone = req.body.phone;
 
+  var kidstest = ["id1","id2","id3"];
+  var orderstest = ["id11","id22","id33"];	
+  user.createUser(name,email,password,address,phone,kidstest,orderstest);
+   
+});
 
 
 

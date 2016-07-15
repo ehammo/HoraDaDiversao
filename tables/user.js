@@ -1,21 +1,24 @@
 'use strict';
 var Adapter;
-var User;
+var UserTable;
+
 function setAdapter(adapter) {
 	Adapter = adapter;
 	setUser();
 }
 
 function setUser() {
-	User = Adapter.User;
+	UserTable = Adapter.User;
 }
 
-class User(){	
+class User{	
+	
+	constructor(){}
 	
 	//create
 	createUser(name, email,pass,address,phone,kids,orders){
 		
-		User.find({
+		UserTable.find({
 			where: {email : email}
 		})
 		.then(function(user){
@@ -24,7 +27,7 @@ class User(){
 					res.send("Erro! Já existe um usuário cadastrado com o email " + email);
 					console.log("error! already has user with email " + email);
 			} else{
-				User.create({
+				UserTable.create({
 					name: name,
 					email: email,
 					password: pass,
@@ -41,7 +44,7 @@ class User(){
 	}
 }
 
-module.exports = function(tables) {
-	User: user,
-	setAdapter: setAdapter	
+module.exports = {
+	User: User,
+	setAdapter: setAdapter
 };
