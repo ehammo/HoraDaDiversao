@@ -1,9 +1,18 @@
-module.exports = function(tables) {
-	
-	var User = tables.User;
+'use strict';
+var Adapter;
+var User;
+function setAdapter(adapter) {
+	Adapter = adapter;
+	setUser();
+}
+
+function setUser() {
+	User = Adapter.User;
+}
+
+class User(){	
 	
 	//create
-	
 	createUser(name, email,pass,address,phone,kids,orders){
 		
 		User.find({
@@ -30,7 +39,9 @@ module.exports = function(tables) {
 		});
 		
 	}
-	
-	
-	
 }
+
+module.exports = function(tables) {
+	User: user,
+	setAdapter: setAdapter	
+};

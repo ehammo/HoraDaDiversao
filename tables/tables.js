@@ -92,8 +92,8 @@ module.exports = function(connection) {
 	User.hasMany(Kid, {as: 'Kids'})
 	User.hasMany(Order, {as: 'History'})
 	ShopCart.hasMany(Order, {as: 'Orders'})
-	Order.hasOne(User, {as: 'User'})
-	Order.hasOne(Supplier, {as: 'Supplier'})
+	Order.belongsTo(User, {as: 'User'})
+	Order.belongsTo(Supplier, {as: 'Supplier'})
 	Order.hasMany(Product, {as: 'Products'})
 	
     connection.sync(); // create tables if dont exist
