@@ -49,7 +49,7 @@ module.exports = function(connection) {
 //		orders: Sequelize.ARRAY(Sequelize.STRING), //array de orders_ids	
     });
 
-    var Orders = connection.define('Orders', {
+    var Order = connection.define('Order', {
         id: {
             type: Sequelize.STRING,
             primaryKey: true
@@ -113,6 +113,6 @@ module.exports = function(connection) {
 
 //    return router;
 
-  var tables = {User,Elder,UserElder};
+  var tables = {User,Kid,Product,ShopCart,Order,Supplier};
   return tables;
 }

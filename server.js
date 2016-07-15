@@ -21,10 +21,16 @@ app.use(bodyParser.urlencoded({'extended':'true'}));            // parse applica
 app.use(bodyParser.json());                                     // parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
+
+var tables = require('./tables/tables')(connection);
+
+
+//routes
 app.get("/",function(req,res){
     res.send("<h1>Hello from HoraDiversao WebServer</h1>");
 		console.log('index');
 });
+
 
 
 
