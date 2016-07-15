@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');    // pull information from HTML POST (
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
 // configuration =================
-var env = process.env.NODE_ENV || 'development';
+var env = process.env.NODE_ENV || 'production';
 var config = require('./config')[env];
 var db = config.database;
 var connection = new Sequelize(db.db, db.user, db.password, {
@@ -26,6 +26,15 @@ var tables = require('./tables/tables')(connection);
 var UserClass = require('./tables/user');
 UserClass.setAdapter(tables);
 var user = new UserClass.User();
+
+connection
+  .authenticate()
+  .then(function(err) {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(function (err) {
+    console.log('Unable to connect to the database:', err);
+  });
 
 //routes
 app.get("/",function(req,res){
