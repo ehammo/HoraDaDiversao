@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');    // pull information from HTML POST (
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
 // configuration =================
-var env = process.env.NODE_ENV || 'production';
+var env = process.env.NODE_ENV || 'development';
 var config = require('./config')[env];
 var db = config.database;
 var connection = new Sequelize(db.db, db.user, db.password, {
@@ -51,8 +51,15 @@ app.post("/user/create/",function(req,res){
 
   var kidstest = ["id1","id2","id3"];
   var orderstest = ["id11","id22","id33"];	
-  user.createUser(name,email,password,address,phone,kidstest,orderstest);
-   
+  var ret = user.createUser(name,email,password,address,phone,kidstest,orderstest);
+  res.send(ret);
+  console.log(ret);
+});
+
+app.post("/hue/", function(req,res){
+	var email = req.body.email;
+	
+	user.readUser(email);
 });
 
 

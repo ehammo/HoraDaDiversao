@@ -3,10 +3,10 @@ development: {
   url:'http://localhost:3000',
   database: {
       host: 'localhost',
-      port: '3306',
-      db: 'horadiversaotests',
-      user: 'root',
-      password: 'adminadmin',
+      port: '5432',
+      db: 'horadiversao',
+      user: 'postgres',
+      password: 'admin',
       dialect: 'postgres'
   }
 },

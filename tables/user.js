@@ -22,9 +22,9 @@ class User{
 		})
 		.then(function(user){
 			if (user) {
-				res.status(500);
-					res.send("Erro! Já existe um usuário cadastrado com o email " + email);
-					console.log("error! already has user with email " + email);
+				console.log("error! already has user with email " + email);
+				return true;
+				return ("Erro! Já existe um usuário cadastrado com o email " + email);
 			} else{
 				UserTable.create({
 					name: name,
@@ -35,8 +35,8 @@ class User{
 				}).then(function (user2) {
 					user2.setKids(kids);
 					user2.setHistory(orders);
-					return(user2);
 					console.log("created user: " + JSON.stringify(user2.dataValues) );
+					return(user2);
 				});
 			}
 		});
@@ -44,15 +44,16 @@ class User{
 	}
 
 	readUser(email){ // get mesmo?
-  		User.find({
+  		UserTable.find({
   			where: {email : email}
   		}).then(function(user){
   			if (user) { // not found returns null
+				console.log(user.getKids());
   				return(user);
   				console.log("found user: " + JSON.stringify(user.dataValues) );
   			} else{
 				return(user);
-  				res.send("Erro! Não encontrou usuário com email " + email);
+  				//res.send("Erro! Não encontrou usuário com email " + email);
   				console.log("did not found user with email " + email);
   			}
   		});
@@ -60,7 +61,7 @@ class User{
 	};
 
 	updateUser(name, email,pass,address,phone,kids,orders){
-		User.update({
+		UserTable.update({
 			name: name,
 			email: email,
 			password: pass,
@@ -81,10 +82,10 @@ class User{
 	// TODO falta verificar se existe pedidos em andamento
 	// TODO falta checar se os pedidos e as crianças dependentes sao apagadas. se nao forem implementar.
 
-  	User.destroy({
+  	UserTable.destroy({
   		where : { email: email}
   	}).then(function (user) {
-  		res.send([user]);
+  		return ([user]);
   		console.log("removed %d users and references with email: %s",user, email);
   	});
 		
