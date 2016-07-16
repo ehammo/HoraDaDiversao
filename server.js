@@ -27,14 +27,20 @@ var UserClass = require('./tables/user');
 var KidClass = require('./tables/kid');
 var OrderClass = require('./tables/orders');
 var ProductClass = require('./tables/product');
+var ShopcartClass = require('./tables/shopcart');
+var SupplierClass = require('./tables/supplier');
 UserClass.setAdapter(tables);
 KidClass.setAdapter(tables);
 OrderClass.setAdapter(tables);
 ProductClass.setAdapter(tables);
+ShopcartClass.setAdapter(tables);
+SupplierClass.setAdapter(tables);
 var kid = new KidClass.Kid();
 var user = new UserClass.User();
 var order = new OrderClass.Order();
 var product = new ProductClass.Product();
+var shopcart = new ShopcartClass.Shopcart();
+var supplier = new SupplierClass.Supplier();
 connection
   .authenticate()
   .then(function(err) {
@@ -214,7 +220,79 @@ app.post("/product/update/",function(req,res){
 	res.send("okay");
 });
 
+//shopcart
 
+
+app.post("/shopcart/create/",function(req,res){
+	var id = req.body.id;
+	var status = req.body.status;
+	var orders = ["Pedido1", "Pedido2"];
+	var ret = shopcart.createShopcart(id,status,orders);
+	res.send("okay");
+});
+
+app.post("/shopcart/read/", function(req,res){
+	var id = req.body.id;
+	console.log("id: "+id);
+	shopcart.readShopcart(id);
+	res.send("okay");
+});
+
+app.post("/shopcart/delete",function(req,res){
+	var id = req.body.id;
+	shopcart.deleteShopcart(id);
+	res.send("ok");
+});
+
+app.post("/shopcart/update/",function(req,res){
+	var id = req.body.id;
+	var status = req.body.status;
+	var orders = ["Pedido1", "Pedido2"];
+	var ret = shopcart.updateShopcart(id,status,orders);
+	res.send("okay");
+});
+
+//supplier
+
+app.post("/supplier/create/",function(req,res){
+  var name = req.body.name;
+  var id = req.body.id;
+  var password = req.body.password;
+  var address = req.body.address;
+  var phone = req.body.phone;
+  var banner = req.body.banner;
+  var description = req.body.description;
+  var categories = ["id11","id22","id33"];	
+  var ret = supplier.createSupplier(name, id,pass,address,phone,banner,description,categories);
+  res.send("okay");
+});
+
+app.post("/supplier/delete",function(req,res){
+	var id = req.body.id;
+	
+	user.deleteSupplier(id);
+	res.send("ok");
+});
+
+app.post("/supplier/update/",function(req,res){
+	var name = req.body.name;
+	var id = req.body.id;
+	var password = req.body.password;
+	var address = req.body.address;
+	var phone = req.body.phone;
+	var banner = req.body.banner;
+	var description = req.body.description;
+	var categories = ["id11","id22","id33"];
+	var ret = supplier.updateSupplier(name, id,pass,address,phone,banner,description,categories);
+	res.send("okay");
+});
+
+app.post("/supplier/read/", function(req,res){
+	var id = req.body.id;
+	console.log("id: "+id);
+	supplier.readSupplier(id);
+	res.send("okay");
+});
 
 // listen (start app with node server.js) ======================================
 var port = process.env.PORT || 3000;

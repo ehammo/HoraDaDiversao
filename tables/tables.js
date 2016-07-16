@@ -81,9 +81,10 @@ module.exports = function(connection) {
             type: Sequelize.STRING,
             primaryKey: true
         },
+		password: Sequelize.STRING,
         address: Sequelize.STRING,
         phone: Sequelize.STRING, 
-		banner: Sequelize.BOOLEAN, //photo adress on net 
+		banner: Sequelize.STRING, //photo adress on net 
 		description: Sequelize.STRING, 
 		categories: Sequelize.ARRAY(Sequelize.STRING)
     });
@@ -92,6 +93,7 @@ module.exports = function(connection) {
 	User.hasMany(Kid, {as: 'Kids'})
 	User.hasMany(Order, {as: 'History'})
 	ShopCart.hasMany(Order, {as: 'Orders'})
+	ShopCart.belongsTo(User, {as: 'User'})
 	Order.belongsTo(User, {as: 'User'})
 	Order.belongsTo(Supplier, {as: 'Supplier'})
 	Order.hasMany(Product, {as: 'Products'})
