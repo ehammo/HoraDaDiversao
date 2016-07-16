@@ -25,10 +25,13 @@ app.use(methodOverride());
 var tables = require('./tables/tables')(connection);
 var UserClass = require('./tables/user');
 var KidClass = require('./tables/kid');
+var OrderClass = require('./tables/orders');
 UserClass.setAdapter(tables);
 KidClass.setAdapter(tables);
+OrderClass.setAdapter(tables);
 var kid = new KidClass.Kid();
 var user = new UserClass.User();
+var order = new OrderClass.Order();
 
 connection
   .authenticate()
@@ -59,6 +62,25 @@ app.post("/user/create/",function(req,res){
   res.send("okay");
 });
 
+app.post("/user/delete",function(req,res){
+	var email = req.body.email;
+	
+	user.deleteUser(email);
+	res.send("ok");
+});
+
+app.post("/user/update/",function(req,res){
+	var name = req.body.name;
+  var email = req.body.email;
+  var password = req.body.password;
+  var address = req.body.address;
+  var phone = req.body.phone;
+  var kidstest = ["id1","id2","id3"];
+  var orderstest = ["id11","id22","id33"];	
+  var ret = user.updateUser(name,email,password,address,phone,kidstest,orderstest);
+  res.send("okay");
+});
+
 app.post("/user/read/", function(req,res){
 	var email = req.body.email;
 	console.log("email: "+email);
@@ -67,16 +89,16 @@ app.post("/user/read/", function(req,res){
 });
 
 
-app.get("/user/read/:email", function(req,res){
+/*app.get("/user/read/:email", function(req,res){
 	var email = req.params.email;
 	console.log("email: "+email);
 	user.readUser(email);
 	res.send("okay");
-});
+});*/
 
 //Kid
 
-app.post("/Kid/create/",function(req,res){
+app.post("/kid/create/",function(req,res){
   var name = req.body.name;
   var id = req.body.id;
   var gender = req.body.gender;
@@ -85,17 +107,69 @@ app.post("/Kid/create/",function(req,res){
   res.send("okay");
 });
 
-app.get("/kid/read/:id", function(req,res){
+/*app.get("/kid/read/:id", function(req,res){
 	var id = req.params.id;
+	kid.readKid(id);
+	res.send("okay");
+});*/
+
+app.post("/kid/read/", function(req,res){
+	var id = req.body.id;
+	console.log("id: "+id);
 	kid.readKid(id);
 	res.send("okay");
 });
 
-app.post("/hue/", function(req,res){
-	var email = req.body.email;
-	
-	
+app.post("/kid/delete",function(req,res){
+	var id = req.body.id;
+	kid.deleteKid(id);
+	res.send("ok");
 });
+
+app.post("/kid/update/",function(req,res){
+	var name = req.body.name;
+	var id = req.body.id;
+	var gender = req.body.gender;
+	var birth = req.body.birth;
+	var ret = kid.updateKid(name,id,gender,birth);
+	res.send("okay");
+});
+
+//orders
+
+app.post("/order/create/",function(req,res){
+  var id = req.body.id;
+  var qtd = req.body.qtd;
+  var date = req.body.date;
+  var address = req.body.address;
+  var status = req.body.status;
+  var ret = order.createOrder(id,qtd,date,address,status);
+  res.send("okay");
+});
+
+app.post("/order/read/", function(req,res){
+	var id = req.body.id;
+	console.log("id: "+id);
+	order.readOrder(id);
+	res.send("okay");
+});
+
+app.post("/order/delete",function(req,res){
+	var id = req.body.id;
+	order.deleteOrder(id);
+	res.send("ok");
+});
+
+app.post("/order/update/",function(req,res){
+	var id = req.body.id;
+	var qtd = req.body.qtd;
+	var date = req.body.date;
+	var address = req.body.address;
+	var status = req.body.status;
+	var ret = order.updateOrder(id,qtd,date,address,status);
+	res.send("okay");
+});
+
 
 
 

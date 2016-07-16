@@ -77,19 +77,22 @@ class User{
 			address:address,
 			phone: phone
 		}, { where : {email : email }
-		}).then(function (user) {
-			user.setKids(kids);
-			user.setHistory(orders);
-			return(user);
-			console.log(user);
-			console.log('updated %d users to: (%s,%s,%s)',user,name,email,password,address,phone);
+		}).then((query) => {
+			UserTable.find({
+				where: {email : email}
+			}).then(function(user){			
+				user.setKids(kids);
+				user.setHistory(orders);
+				return(user);
+				console.log(user);
+				console.log('updated %d users to: (%s,%s,%s)',user,name,email,password,address,phone);
+			});
 		});
-	};
-	
+	}
 	deleteUser(email){
   	// TODO falta verificar se a senha bate
 	// TODO falta verificar se existe pedidos em andamento
-	// TODO falta checar se os pedidos e as crianças dependentes sao apagadas. se nao forem implementar.
+	// TODO falta apagar os pedidos e as crianças dependentes.
 
   	UserTable.destroy({
   		where : { email: email}

@@ -23,7 +23,7 @@ class Kid{
 		.then(function(Kid){
 			if (Kid) {
 				console.log("error! already has Kid with id " + id);
-				return ("Erro! Já existe um usuário cadastrado com o id " + id);
+				return ("Erro! Já existe um Kid cadastrado com o id " + id);
 			} else{
 				KidTable.create({
 					name: name,
@@ -45,9 +45,7 @@ class Kid{
   		}).then(function(Kid){
   			if (Kid) { // not found returns null
 				console.log("found Kid: " + JSON.stringify(Kid.dataValues) );
-//				console.log("\n\n");
-//				var kids = Kid.getKids();
-//				console.log(kids[0]);
+//				TODO checar de qual user é?
 				return(Kid);
   				
   			} else{
@@ -75,8 +73,6 @@ class Kid{
 	
 	deleteKid(id){
   	// TODO falta verificar se a senha bate
-	// TODO falta verificar se existe pedidos em andamento
-	// TODO falta checar se os pedidos e as crianças dependentes sao apagadas. se nao forem implementar.
 
   	KidTable.destroy({
   		where : { id: id}
