@@ -18,7 +18,7 @@ class Shopcart{
 	constructor(){}
 	
 	//create
-	createShopcart(id,status,orders,email){
+	createShopcart(id,qtd,date,address,status,products,email){
 		ShopcartTable.find({
 			where: {id : id}
 		})
@@ -36,6 +36,9 @@ class Shopcart{
 					}else{
 						ShopcartTable.create({
 							id: id,
+							qtd: qtd,
+							date: date,
+							address: address,
 							status: status
 						}).then((Shopcart2)=> {							
 							user.getHistory().then((shops) => {
@@ -78,9 +81,12 @@ class Shopcart{
 
 	};
 
-	updateShopcart(id,status,orders,email){
+	updateShopcart(id,qtd,date,address,status,products,email){
 		ShopcartTable.update({
 			id: id,
+			qtd: qtd,
+			date: date,
+			address: address,
 			status: status
 		}, { where : {id : id }
 		}).then((Shopcart2)=> {
@@ -106,7 +112,7 @@ class Shopcart{
 			Shopcart.setOrders(orders);
 			return(Shopcart);
 			console.log(Shopcart);
-			console.log('updated %d Shopcarts to: (%s,%s,%s)',Shopcart,id,status,orders);
+//			console.log('updated %d Shopcarts to: (%s,%s,%s)',Shopcart,id,status,orders);
 			});
 		};
 	

@@ -25,19 +25,19 @@ app.use(methodOverride());
 var tables = require('./tables/tables')(connection);
 var UserClass = require('./tables/user');
 var KidClass = require('./tables/kid');
-var OrderClass = require('./tables/orders');
+//var OrderClass = require('./tables/orders');
 var ProductClass = require('./tables/product');
 var ShopcartClass = require('./tables/shopcart');
 var SupplierClass = require('./tables/supplier');
 UserClass.setAdapter(tables);
 KidClass.setAdapter(tables);
-OrderClass.setAdapter(tables);
+//OrderClass.setAdapter(tables);
 ProductClass.setAdapter(tables);
 ShopcartClass.setAdapter(tables);
 SupplierClass.setAdapter(tables);
 var kid = new KidClass.Kid();
 var user = new UserClass.User();
-var order = new OrderClass.Order();
+//var order = new OrderClass.Order();
 var product = new ProductClass.Product();
 var shopcart = new ShopcartClass.Shopcart();
 var supplier = new SupplierClass.Supplier();
@@ -83,8 +83,6 @@ app.post("/user/update/",function(req,res){
 	var password = req.body.password;
 	var address = req.body.address;
 	var phone = req.body.phone;
-//	var kidstest = ["id1","id2","id3"];
-//	var shopcarttest = ["carrinho1","carrinho2","carrinho3"];	
 	var ret = user.updateUser(name,email,password,address,phone);
 	res.send("okay");
 });
@@ -146,6 +144,7 @@ app.post("/kid/update/",function(req,res){
 });
 
 //orders
+/*
 
 app.post("/order/create/",function(req,res){
   var id = req.body.id;
@@ -182,7 +181,7 @@ app.post("/order/update/",function(req,res){
 	var ret = order.updateOrder(id,qtd,date,address,status,products);
 	res.send("okay");
 });
-
+*/
 //product
 
 app.post("/product/create/",function(req,res){

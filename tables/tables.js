@@ -39,14 +39,6 @@ module.exports = function(connection) {
     });
 	
     var ShopCart = connection.define('ShopCart', {
-        status: Sequelize.STRING,
-        id: {
-            type: Sequelize.STRING,
-            primaryKey: true
-        }
-    });
-
-    var Order = connection.define('Order', {
         id: {
             type: Sequelize.STRING,
             primaryKey: true
@@ -56,6 +48,17 @@ module.exports = function(connection) {
 		address: Sequelize.STRING,
 		status: Sequelize.STRING
     });
+
+/*    var Order = connection.define('Order', {
+        id: {
+            type: Sequelize.STRING,
+            primaryKey: true
+        },
+		qtd: Sequelize.ARRAY(Sequelize.INTEGER),
+		date: Sequelize.STRING,
+		address: Sequelize.STRING,
+		status: Sequelize.STRING
+    });*/
 
 	var Supplier = connection.define('Supplier', {
         name: Sequelize.STRING,
@@ -74,10 +77,11 @@ module.exports = function(connection) {
 	//cardinalidades
 	User.hasMany(Kid, {as: 'Kids'})
 	User.hasMany(ShopCart, {as: 'History'})
-	ShopCart.hasMany(Order, {as: 'Orders'})
-	Order.belongsTo(User, {as: 'User'})
-	Order.belongsTo(Supplier, {as: 'Supplier'})
-	Order.hasMany(Product, {as: 'Products'})
+	ShopCart.hasMany(Product, {as: 'Products'})
+	//	ShopCart.hasMany(Order, {as: 'Orders'})
+	//Order.belongsTo(User, {as: 'User'})
+	//Order.belongsTo(Supplier, {as: 'Supplier'})
+	//Order.hasMany(Product, {as: 'Products'})
 	Supplier.hasMany(Product, {as: 'Products'})
 	
 	
