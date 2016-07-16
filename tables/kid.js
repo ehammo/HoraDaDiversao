@@ -57,7 +57,7 @@ class Kid{
 
 	};
 
-	updateKid(name, id,pass,address,phone,kids,orders){
+	updateKid(name, id,gender,birth){
 		KidTable.update({
 			name: name,
 			id: id,

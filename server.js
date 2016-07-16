@@ -202,7 +202,7 @@ app.post("/product/delete",function(req,res){
 	res.send("ok");
 });
 
-app.post("/kid/update/",function(req,res){
+app.post("/product/update/",function(req,res){
 	var name = req.body.name;
 	var id = req.body.id;
 	var price = req.body.price;
