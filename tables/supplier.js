@@ -16,7 +16,7 @@ class Supplier{
 	constructor(){}
 	
 	//create
-	createSupplier(name, id,pass,address,phone,banner,description,categories){
+	createSupplier(name, id,pass,address,phone,banner,description,categories,products){
 		SupplierTable.find({
 			where: {id : id}
 		})
@@ -36,6 +36,7 @@ class Supplier{
 					description: description,
 					categories: categories
 				}).then(function (supplier2) {
+					supplier2.setProducts(products);
 					console.log("created supplier: " + JSON.stringify(supplier2.dataValues) );
 					return(supplier2);
 				});
@@ -62,7 +63,7 @@ class Supplier{
 
 	};
 
-	updateSupplier(name, id,pass,address,phone,banner,description,categories){
+	updateSupplier(name, id,pass,address,phone,banner,description,categories,products){
 		SupplierTable.update({
 			name: name,
 			id: id,
@@ -73,12 +74,16 @@ class Supplier{
 			description: description,
 			categories: categories
 		}, { where : {id : id }
-		}).then(function(supplier){			
-			return(supplier);
-			console.log(supplier);
-			console.log('updated %d suppliers to: (%s,%s,%s)',supplier,name, id,pass,address,phone,banner,description,categories);
+		}).then((query) => {
+			SupplierTable.find({
+				where: {id : id}
+			}).then(function(supplier){			
+				supplier.setProducts(products)
+				return(supplier);
+				console.log(supplier);
+				console.log('updated %d suppliers to: (%s,%s,%s)',supplier,name, id,pass,address,phone,banner,description,categories);
+			});
 		});
-		
 	}
 	deleteSupplier(id){
   	// TODO falta verificar se a senha bate

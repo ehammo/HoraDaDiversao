@@ -78,7 +78,7 @@ module.exports = function(connection) {
 	Order.belongsTo(User, {as: 'User'})
 	Order.belongsTo(Supplier, {as: 'Supplier'})
 	Order.hasMany(Product, {as: 'Products'})
-	Supplier.hasMany(Product, {as: 'Products'}
+	Supplier.hasMany(Product, {as: 'Products'})
 	
 	
     connection.sync(); // create tables if dont exist

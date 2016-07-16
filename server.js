@@ -263,8 +263,8 @@ app.post("/supplier/create/",function(req,res){
   var banner = req.body.banner;
   var description = req.body.description;
   var categories = ["id11","id22","id33"];	
-  var products = ["Produto 1","Produto 2","Produto 3","Produto 4"]
-  var ret = supplier.createSupplier(name, id,password,address,phone,banner,description,categories);
+  var products = ["Product 1","Product 2","Product 3","Product 4"]
+  var ret = supplier.createSupplier(name, id,password,address,phone,banner,description,categories,products);
   res.send("okay");
 });
 
@@ -284,7 +284,8 @@ app.post("/supplier/update/",function(req,res){
 	var banner = req.body.banner;
 	var description = req.body.description;
 	var categories = ["id11","id22","id33"];
-	var ret = supplier.updateSupplier(name, id,password,address,phone,banner,description,categories);
+	var products = ["Product 1","Product 2","Product 3","Product 4"]
+	var ret = supplier.updateSupplier(name, id,password,address,phone,banner,description,categories,products);
 	res.send("okay");
 });
 
