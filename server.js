@@ -24,7 +24,10 @@ app.use(methodOverride());
 
 var tables = require('./tables/tables')(connection);
 var UserClass = require('./tables/user');
+var KidClass = require('./tables/kid');
 UserClass.setAdapter(tables);
+KidClass.setAdapter(tables);
+var kid = new KidClass.Kid();
 var user = new UserClass.User();
 
 connection
@@ -48,7 +51,11 @@ app.post("/user/create/",function(req,res){
   var password = req.body.password;
   var address = req.body.address;
   var phone = req.body.phone;
-
+  console.log(name);
+  console.log(email);
+  console.log(password);
+  console.log(address);
+  console.log(phone);
   var kidstest = ["id1","id2","id3"];
   var orderstest = ["id11","id22","id33"];	
   var ret = user.createUser(name,email,password,address,phone,kidstest,orderstest);
@@ -60,6 +67,7 @@ app.post("/hue/", function(req,res){
 	var email = req.body.email;
 	
 	user.readUser(email);
+	res.send("okay");
 });
 
 

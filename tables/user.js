@@ -48,9 +48,12 @@ class User{
   			where: {email : email}
   		}).then(function(user){
   			if (user) { // not found returns null
-				console.log(user.getKids());
-  				return(user);
-  				console.log("found user: " + JSON.stringify(user.dataValues) );
+				console.log("found user: " + JSON.stringify(user.dataValues) );
+//				console.log("\n\n");
+//				var kids = user.getKids();
+//				console.log(kids[0]);
+				return(user);
+  				
   			} else{
 				return(user);
   				//res.send("Erro! Não encontrou usuário com email " + email);
@@ -73,7 +76,7 @@ class User{
 			user.setHistory(orders);
 			return(user);
 			console.log(user);
-			console.log('updated %d users to: (%s,%s,%s)',user,name,email,password);
+			console.log('updated %d users to: (%s,%s,%s)',user,name,email,password,address,phone);
 		});
 	};
 	
