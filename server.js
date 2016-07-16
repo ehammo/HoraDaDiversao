@@ -26,13 +26,15 @@ var tables = require('./tables/tables')(connection);
 var UserClass = require('./tables/user');
 var KidClass = require('./tables/kid');
 var OrderClass = require('./tables/orders');
+var ProductClass = require('./tables/product');
 UserClass.setAdapter(tables);
 KidClass.setAdapter(tables);
 OrderClass.setAdapter(tables);
+ProductClass.setAdapter(tables);
 var kid = new KidClass.Kid();
 var user = new UserClass.User();
 var order = new OrderClass.Order();
-
+var product = new ProductClass.Product();
 connection
   .authenticate()
   .then(function(err) {
@@ -173,7 +175,44 @@ app.post("/order/update/",function(req,res){
 	res.send("okay");
 });
 
+//product
 
+app.post("/product/create/",function(req,res){
+	var name = req.body.name;
+	var id = req.body.id;
+	var price = req.body.price;
+	var photo = req.body.photo;
+	var availability = req.body.availability;
+	var description = req.body.description;
+	var category = req.body.category;
+	var ret = product.createProduct(name, id,price,photo,availability,description, category);
+	res.send("okay");
+});
+
+app.post("/product/read/", function(req,res){
+	var id = req.body.id;
+	console.log("id: "+id);
+	product.readProduct(id);
+	res.send("okay");
+});
+
+app.post("/product/delete",function(req,res){
+	var id = req.body.id;
+	product.deleteProduct(id);
+	res.send("ok");
+});
+
+app.post("/kid/update/",function(req,res){
+	var name = req.body.name;
+	var id = req.body.id;
+	var price = req.body.price;
+	var photo = req.body.photo;
+	var availability = req.body.availability;
+	var description = req.body.description;
+	var category = req.body.category;
+	var ret = product.updateProduct(name, id,price,photo,availability,description, category);
+	res.send("okay");
+});
 
 
 
