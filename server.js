@@ -139,11 +139,13 @@ app.post("/kid/update/",function(req,res){
 
 app.post("/order/create/",function(req,res){
   var id = req.body.id;
-  var qtd = req.body.qtd;
+//  var qtd = req.body.qtd;
+  var qtd = [1,2];
+  var products = ["produto1","produto2"];
   var date = req.body.date;
   var address = req.body.address;
   var status = req.body.status;
-  var ret = order.createOrder(id,qtd,date,address,status);
+  var ret = order.createOrder(id,qtd,date,address,status,products);
   res.send("okay");
 });
 
@@ -162,11 +164,12 @@ app.post("/order/delete",function(req,res){
 
 app.post("/order/update/",function(req,res){
 	var id = req.body.id;
-	var qtd = req.body.qtd;
+	var qtd = [1,2];
+	var products = ["produto1","produto2"];
 	var date = req.body.date;
 	var address = req.body.address;
 	var status = req.body.status;
-	var ret = order.updateOrder(id,qtd,date,address,status);
+	var ret = order.updateOrder(id,qtd,date,address,status,products);
 	res.send("okay");
 });
 

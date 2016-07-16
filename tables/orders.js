@@ -1,6 +1,6 @@
 'use strict';
 var Adapter;
-var orderTable;
+var OrderTable;
 
 function setAdapter(adapter) {
 	Adapter = adapter;
@@ -8,7 +8,7 @@ function setAdapter(adapter) {
 }
 
 function setOrder() {
-	orderTable = Adapter.order;
+	OrderTable = Adapter.Order;
 }
 
 class Order{	
@@ -16,8 +16,8 @@ class Order{
 	constructor(){}
 	
 	//create
-	createOrder(id,qtd,date,address,status){
-		orderTable.find({
+	createOrder(id,qtd,date,address,status,products){
+		OrderTable.find({
 			where: {id : id}
 		})
 		.then(function(order){
@@ -25,13 +25,14 @@ class Order{
 				console.log("error! already has order with id " + id);
 				return ("Erro! Já existe um order cadastrado com o id " + id);
 			} else{
-				orderTable.create({
+				OrderTable.create({
 					id: id,
 					qtd: qtd,
 					date: date,
 					address: address,
 					status: status
 				}).then(function (order2) {
+					order2.setProducts(products)
 					console.log("created order: " + JSON.stringify(order2.dataValues) );
 					return(order2);
 				});
@@ -41,7 +42,7 @@ class Order{
 	}
 
 	readOrder(id){ // get mesmo?
-  		orderTable.find({
+  		OrderTable.find({
   			where: {id : id}
   		}).then(function(order){
   			if (order) { // not found returns null
@@ -58,25 +59,30 @@ class Order{
 
 	};
 
-	updateOrder(name, id,pass,address,phone,orders,orders){
-		orderTable.update({
+	updateOrder(id,qtd,date,address,status,products){
+		OrderTable.update({
 			id: id,
 			qtd: qtd,
 			date: date,
 			address: address,
 			status: status
 		}, { where : {id : id }
-		}).then(function (order) {
-			return(order);
-			console.log(order);
-			console.log('updated %d orders to: (%s,%s,%s)',order,id,qtd,date,address,status);
+		}).then((query) => {
+			OrderTable.find({
+				where: {id : id}
+			}).then(function(order){	
+				order.setProducts(products)
+				return(order);
+				console.log(order);
+				console.log('updated %d orders to: (%s,%s,%s)',order,id,qtd,date,address,status);
+			});
 		});
 	};
 	
 	deleteOrder(id){
  	// TODO falta verificar se o pedido já está em andamento
 
-  	orderTable.destroy({
+  	OrderTable.destroy({
   		where : { id: id}
   	}).then(function (order) {
   		return ([order]);
@@ -90,6 +96,6 @@ class Order{
 
 
 module.exports = {
-	order: order,
+	Order: Order,
 	setAdapter: setAdapter
 };
