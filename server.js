@@ -106,13 +106,13 @@ app.get("/user/read/", function(req,res){
 //Kid
 
 app.post("/kid/create/",function(req,res){
-  var name = req.body.name;
-  var id = req.body.id;
-  var gender = req.body.gender;
-  var birth = req.body.birth;
-  var email = req.body.UserEmail;
-  var ret = kid.createKid(name,id,gender,birth,email);
-  res.send("okay");
+	var name = req.body.name;
+	var id = req.body.id;
+	var gender = req.body.gender;
+	var birth = req.body.birth;
+	var email = req.body.UserEmail;
+	var ret = kid.createKid(name,id,gender,birth,email);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 /*app.get("/kid/read/:id", function(req,res){
@@ -124,14 +124,14 @@ app.post("/kid/create/",function(req,res){
 app.post("/kid/read/", function(req,res){
 	var id = req.body.id;
 	console.log("id: "+id);
-	kid.readKid(id);
-	res.send("okay");
+	var ret = kid.readKid(id);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/kid/delete",function(req,res){
 	var id = req.body.id;
-	kid.deleteKid(id);
-	res.send("ok");
+	var ret = kid.deleteKid(id);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/kid/update/",function(req,res){
@@ -141,7 +141,7 @@ app.post("/kid/update/",function(req,res){
 	var birth = req.body.birth;
 	var email = req.body.UserEmail;
 	var ret = kid.updateKid(name,id,gender,birth,email);
-	res.send("okay");
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 //orders
