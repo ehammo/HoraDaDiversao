@@ -66,7 +66,7 @@ app.post("/user/create/",function(req,res){
   var phone = req.body.phone;
   var kidstest = ["id1","id2","id3"];
   var shopcarttest = ["carrinho1","carrinho2","carrinho3"];	
-  var ret = user.createUser(name,email,password,address,phone,kidstest,shopcarttest);
+  var ret = user.createUser(name,email,password,address,phone);
   res.send("okay");
 });
 
@@ -83,9 +83,9 @@ app.post("/user/update/",function(req,res){
 	var password = req.body.password;
 	var address = req.body.address;
 	var phone = req.body.phone;
-	var kidstest = ["id1","id2","id3"];
-	var shopcarttest = ["carrinho1","carrinho2","carrinho3"];	
-	var ret = user.updateUser(name,email,password,address,phone,kidstest,shopcarttest);
+//	var kidstest = ["id1","id2","id3"];
+//	var shopcarttest = ["carrinho1","carrinho2","carrinho3"];	
+	var ret = user.updateUser(name,email,password,address,phone);
 	res.send("okay");
 });
 
@@ -111,7 +111,8 @@ app.post("/kid/create/",function(req,res){
   var id = req.body.id;
   var gender = req.body.gender;
   var birth = req.body.birth;
-  var ret = kid.createKid(name,id,gender,birth);
+  var email = req.body.UserEmail;
+  var ret = kid.createKid(name,id,gender,birth,email);
   res.send("okay");
 });
 
@@ -139,7 +140,8 @@ app.post("/kid/update/",function(req,res){
 	var id = req.body.id;
 	var gender = req.body.gender;
 	var birth = req.body.birth;
-	var ret = kid.updateKid(name,id,gender,birth);
+	var email = req.body.UserEmail;
+	var ret = kid.updateKid(name,id,gender,birth,email);
 	res.send("okay");
 });
 
@@ -226,8 +228,9 @@ app.post("/product/update/",function(req,res){
 app.post("/shopcart/create/",function(req,res){
 	var id = req.body.id;
 	var status = req.body.status;
+	var email = req.body.email;
 	var orders = ["Pedido1", "Pedido2"];
-	var ret = shopcart.createShopcart(id,status,orders);
+	var ret = shopcart.createShopcart(id,status,orders,email);
 	res.send("okay");
 });
 
@@ -247,8 +250,9 @@ app.post("/shopcart/delete",function(req,res){
 app.post("/shopcart/update/",function(req,res){
 	var id = req.body.id;
 	var status = req.body.status;
+	var email = req.body.email;
 	var orders = ["Pedido1", "Pedido2"];
-	var ret = shopcart.updateShopcart(id,status,orders);
+	var ret = shopcart.updateShopcart(id,status,orders,email);
 	res.send("okay");
 });
 

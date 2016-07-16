@@ -1,6 +1,7 @@
 'use strict';
 var Adapter;
 var KidTable;
+var UserTable;
 
 function setAdapter(adapter) {
 	Adapter = adapter;
@@ -9,6 +10,7 @@ function setAdapter(adapter) {
 
 function setKid() {
 	KidTable = Adapter.Kid;
+	UserTable = Adapter.User;
 }
 
 class Kid{	
@@ -16,7 +18,7 @@ class Kid{
 	constructor(){}
 	
 	//create
-	createKid(name, id,gender,birth){
+	createKid(name, id,gender,birth,user){
 		KidTable.find({
 			where: {id : id}
 		})
@@ -25,19 +27,39 @@ class Kid{
 				console.log("error! already has Kid with id " + id);
 				return ("Erro! Já existe um Kid cadastrado com o id " + id);
 			} else{
-				KidTable.create({
-					name: name,
-					id: id,
-					gender: gender,
-					birth: birth
-				}).then(function (Kid2) {
-					console.log("created Kid: " + JSON.stringify(Kid2.dataValues) );
-					return(Kid2);
+				UserTable.find({
+				where: {email: user}
+				}).then(function(user){
+					if(!user){
+						console.log("error! no user found");
+						return ("err");
+					}else{
+						KidTable.create({
+							name: name,
+							id: id,
+							gender: gender,
+							birth: birth,
+						}).then((Kid2)=> {
+							user.getKids().then((kids) => {
+								var resp = [];
+								var counter = 0;
+								for (counter; counter < kids.length; counter++) {
+									var values = kids[counter].id;
+									resp.push(values)
+								}
+								resp.push(Kid2.id);
+								user.setKids(resp);
+							});
+							console.log("created Kid: " + JSON.stringify(Kid2.dataValues) );
+							return(Kid2);
+						});
+					}
 				});
+				
 			}
+					
 		});
-		
-	}
+	};
 
 	readKid(id){ // get mesmo?
   		KidTable.find({
@@ -57,14 +79,34 @@ class Kid{
 
 	};
 
-	updateKid(name, id,gender,birth){
+	updateKid(name, id,gender,birth,user){
 		KidTable.update({
 			name: name,
 			id: id,
 			gender: gender,
-			birth: birth
+			birth: birth,
+			UserEmail: user
 		}, { where : {id : id }
-		}).then(function (Kid) {
+		}).then((Kid2)=> {
+			UserTable.find({
+				where: {email: user}
+			}).then(function(user){
+				if(!user){
+					console.log("error! no user found");
+					return ("err");
+				}else{
+					user.getKids().then((kids) => {
+						var resp = [];
+						var counter = 0;
+						for (counter; counter < kids.length; counter++) {
+							var values = kids[counter].id;
+							resp.push(values)
+						}
+						resp.push(Kid2.id);
+						user.setKids(resp);
+					});
+				}
+			});
 			return(Kid);
 			console.log(Kid);
 			console.log('updated %d Kids to: (%s,%s,%s)',Kid,name,id,gender,birth);
