@@ -11,59 +11,63 @@ function setUser() {
 	UserTable = Adapter.User;
 }
 
-class User{	
-	
+class User{
+
 	constructor(){}
-	
+
 	//create
-	createUser(name, email,pass,address,phone){
-		UserTable.find({
-			where: {email : email}
-		})
-		.then(function(user){
-			if (user) {
-				console.log("error! already has user with email " + email);
-				return true;
-				return ("Erro! Já existe um usuário cadastrado com o email " + email);
-			} else{
-				UserTable.create({
-					name: name,
-					email: email,
-					password: pass,
-					address:address,
-					phone: phone
-				}).then(function (user2) {
-					console.log("created user: " + JSON.stringify(user2.dataValues) );
-					return(user2);
-				});
-			}
-		});
-		
+	createUser (name, email,pass,address,phone){
+	  return new Promise(function (resolve,reject){
+	    UserTable.find({
+	      where: {email : email}
+	    })
+	    .then(function(user){
+	      if (user) {
+	        console.log("error! already has user with email " + email);
+	        //res.send(user);
+	        reject(user);
+	        //return ("Erro! Já existe um usuário cadastrado com o email " + email);
+	      } else {
+	        UserTable.create({
+	          name: name,
+	          email: email,
+	          password: pass,
+	          address:address,
+	          phone: phone
+	        }).then((user2) => {
+	          console.log("created user: " + JSON.stringify(user2.dataValues) );
+	          resolve(user2);
+	        });
+	      }
+	    });
+	});
 	}
 
 	readUser(email){ // get mesmo?
+		return new Promise(function (resolve,reject){
   		UserTable.find({
   			where: {email : email}
   		}).then(function(user){
   			if (user) { // not found returns null
-				console.log("found user: " + JSON.stringify(user.dataValues) );
-				console.log("\n\n");
-				user.getKids().then((kids) => {
-					var counter = 0;
-					for (counter; counter < kids.length; counter++) {
-						var values = kids[counter].dataValues;
-						console.log(JSON.stringify(values)+"\n\n");
-					}
-					
-				});
-				return(user);
-  				
+					console.log("found user: " + JSON.stringify(user.dataValues) );
+					console.log("\n\n");
+					user.getKids().then((kids) => {
+						var counter = 0;
+						for (counter; counter < kids.length; counter++) {
+							var values = kids[counter].dataValues;
+							console.log(JSON.stringify(values)+"\n\n");
+						}
+
+					});
+					resolve (user);
+
   			} else{
-				return(user);
+					reject ("not found");
   				//res.send("Erro! Não encontrou usuário com email " + email);
   				console.log("did not found user with email " + email);
   			}
   		});
+		});
 
 	};
 
@@ -78,7 +82,7 @@ class User{
 		}).then((query) => {
 			UserTable.find({
 				where: {email : email}
-			}).then(function(user){			
+			}).then(function(user){
 				return(user);
 				console.log(user);
 				console.log('updated %d users to: (%s,%s,%s)',user,name,email,password,address,phone);
@@ -96,10 +100,10 @@ class User{
   		return ([user]);
   		console.log("removed %d users and references with email: %s",user, email);
   	});
-		
+
 	}
 
-	
+
 }
 
 

@@ -65,14 +65,14 @@ app.post("/user/create/",function(req,res){
   var address = req.body.address;
   var phone = req.body.phone;
   var kidstest = ["id1","id2","id3"];
-  var shopcarttest = ["carrinho1","carrinho2","carrinho3"];	
+  var shopcarttest = ["carrinho1","carrinho2","carrinho3"];
   var ret = user.createUser(name,email,password,address,phone);
-  res.send("okay");
+  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/user/delete",function(req,res){
 	var email = req.body.email;
-	
+
 	user.deleteUser(email);
 	res.send("ok");
 });
@@ -87,11 +87,12 @@ app.post("/user/update/",function(req,res){
 	res.send("okay");
 });
 
-app.post("/user/read/", function(req,res){
-	var email = req.body.email;
+app.get("/user/read/", function(req,res){
+	var email = req.params.email;
 	console.log("email: "+email);
-	user.readUser(email);
-	res.send("okay");
+	var ret = user.readUser(email);
+  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
+	//res.send("okay");
 });
 
 
@@ -265,7 +266,7 @@ app.post("/supplier/create/",function(req,res){
   var phone = req.body.phone;
   var banner = req.body.banner;
   var description = req.body.description;
-  var categories = ["id11","id22","id33"];	
+  var categories = ["id11","id22","id33"];
   var products = ["Product 1","Product 2","Product 3","Product 4"]
   var ret = supplier.createSupplier(name, id,password,address,phone,banner,description,categories,products);
   res.send("okay");
@@ -273,7 +274,7 @@ app.post("/supplier/create/",function(req,res){
 
 app.post("/supplier/delete",function(req,res){
 	var id = req.body.id;
-	
+
 	user.deleteSupplier(id);
 	res.send("ok");
 });

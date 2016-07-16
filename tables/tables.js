@@ -14,7 +14,7 @@ module.exports = function(connection) {
         address: Sequelize.STRING,
 		phone: Sequelize.STRING
     });
-	
+
     var Kid = connection.define('Kid', {
         name: Sequelize.STRING,
         id: {
@@ -24,7 +24,7 @@ module.exports = function(connection) {
         gender: Sequelize.STRING,
         birth: Sequelize.STRING
     });
-		
+
     var Product = connection.define('Product', {
         name: Sequelize.STRING,
         id: {
@@ -33,11 +33,11 @@ module.exports = function(connection) {
         },
         price: Sequelize.STRING,
         photo: Sequelize.STRING, //photo adress on net
-		availability: Sequelize.BOOLEAN, 
-		description: Sequelize.STRING, 
+		availability: Sequelize.BOOLEAN,
+		description: Sequelize.STRING,
 		category: Sequelize.STRING
     });
-	
+
     var ShopCart = connection.define('ShopCart', {
         id: {
             type: Sequelize.STRING,
@@ -68,12 +68,12 @@ module.exports = function(connection) {
         },
 		password: Sequelize.STRING,
         address: Sequelize.STRING,
-        phone: Sequelize.STRING, 
-		banner: Sequelize.STRING, //photo adress on net 
-		description: Sequelize.STRING, 
+        phone: Sequelize.STRING,
+		banner: Sequelize.STRING, //photo adress on net
+		description: Sequelize.STRING,
 		categories: Sequelize.ARRAY(Sequelize.STRING)
     });
-	
+
 	//cardinalidades
 	User.hasMany(Kid, {as: 'Kids'})
 	User.hasMany(ShopCart, {as: 'History'})
@@ -83,8 +83,8 @@ module.exports = function(connection) {
 	//Order.belongsTo(Supplier, {as: 'Supplier'})
 	//Order.hasMany(Product, {as: 'Products'})
 	Supplier.hasMany(Product, {as: 'Products'})
-	
-	
+
+
     connection.sync(); // create tables if dont exist
 
     router.get("/resetdb",function(req,res){ // bugado
@@ -110,6 +110,7 @@ module.exports = function(connection) {
 
 //    return router;
 
-  var tables = {User,Kid,Product,ShopCart,Order,Supplier};
+  //var tables = {User,Kid,Product,ShopCart,Order,Supplier};
+  var tables = {User,Kid,Product,ShopCart,Supplier};
   return tables;
 }
