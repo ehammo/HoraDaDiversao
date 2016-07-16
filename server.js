@@ -65,8 +65,8 @@ app.post("/user/create/",function(req,res){
   var address = req.body.address;
   var phone = req.body.phone;
   var kidstest = ["id1","id2","id3"];
-  var orderstest = ["id11","id22","id33"];	
-  var ret = user.createUser(name,email,password,address,phone,kidstest,orderstest);
+  var shopcarttest = ["carrinho1","carrinho2","carrinho3"];	
+  var ret = user.createUser(name,email,password,address,phone,kidstest,shopcarttest);
   res.send("okay");
 });
 
@@ -79,14 +79,14 @@ app.post("/user/delete",function(req,res){
 
 app.post("/user/update/",function(req,res){
 	var name = req.body.name;
-  var email = req.body.email;
-  var password = req.body.password;
-  var address = req.body.address;
-  var phone = req.body.phone;
-  var kidstest = ["id1","id2","id3"];
-  var orderstest = ["id11","id22","id33"];	
-  var ret = user.updateUser(name,email,password,address,phone,kidstest,orderstest);
-  res.send("okay");
+	var email = req.body.email;
+	var password = req.body.password;
+	var address = req.body.address;
+	var phone = req.body.phone;
+	var kidstest = ["id1","id2","id3"];
+	var shopcarttest = ["carrinho1","carrinho2","carrinho3"];	
+	var ret = user.updateUser(name,email,password,address,phone,kidstest,shopcarttest);
+	res.send("okay");
 });
 
 app.post("/user/read/", function(req,res){
@@ -263,7 +263,8 @@ app.post("/supplier/create/",function(req,res){
   var banner = req.body.banner;
   var description = req.body.description;
   var categories = ["id11","id22","id33"];	
-  var ret = supplier.createSupplier(name, id,pass,address,phone,banner,description,categories);
+  var products = ["Produto 1","Produto 2","Produto 3","Produto 4"]
+  var ret = supplier.createSupplier(name, id,password,address,phone,banner,description,categories);
   res.send("okay");
 });
 
@@ -283,7 +284,7 @@ app.post("/supplier/update/",function(req,res){
 	var banner = req.body.banner;
 	var description = req.body.description;
 	var categories = ["id11","id22","id33"];
-	var ret = supplier.updateSupplier(name, id,pass,address,phone,banner,description,categories);
+	var ret = supplier.updateSupplier(name, id,password,address,phone,banner,description,categories);
 	res.send("okay");
 });
 

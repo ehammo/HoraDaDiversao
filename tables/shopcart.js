@@ -8,7 +8,7 @@ function setAdapter(adapter) {
 }
 
 function setShopcart() {
-	ShopcartTable = Adapter.Shopcart;
+	ShopcartTable = Adapter.ShopCart;
 }
 
 class Shopcart{	

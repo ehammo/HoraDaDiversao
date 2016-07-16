@@ -12,8 +12,6 @@ module.exports = function(connection) {
         },
         password: Sequelize.STRING,
         address: Sequelize.STRING,
-//		kids: Sequelize.ARRAY(Sequelize.STRING), //array de kids_ids
-//		orders: Sequelize.ARRAY(Sequelize.STRING), //array de orders_ids
 		phone: Sequelize.STRING
     });
 	
@@ -45,8 +43,7 @@ module.exports = function(connection) {
         id: {
             type: Sequelize.STRING,
             primaryKey: true
-        },
-//		orders: Sequelize.ARRAY(Sequelize.STRING), //array de orders_ids	
+        }
     });
 
     var Order = connection.define('Order', {
@@ -54,21 +51,6 @@ module.exports = function(connection) {
             type: Sequelize.STRING,
             primaryKey: true
         },
-/*		user_email: {
-            type: Sequelize.STRING,
-            references: {
-                model: 'Users',
-                key: 'email'
-            }
-        },*/
-/*        supplier_id: {
-            type: Sequelize.STRING,
-            references: {
-                model: 'Supplier',
-                key: 'id'
-            }
-        },*/
-//		products: Sequelize.ARRAY(Sequelize.STRING), //array de product_ids	
 		qtd: Sequelize.ARRAY(Sequelize.INTEGER),
 		date: Sequelize.STRING,
 		address: Sequelize.STRING,
@@ -91,12 +73,13 @@ module.exports = function(connection) {
 	
 	//cardinalidades
 	User.hasMany(Kid, {as: 'Kids'})
-	User.hasMany(Order, {as: 'History'})
+	User.hasMany(ShopCart, {as: 'History'})
 	ShopCart.hasMany(Order, {as: 'Orders'})
-	ShopCart.belongsTo(User, {as: 'User'})
 	Order.belongsTo(User, {as: 'User'})
 	Order.belongsTo(Supplier, {as: 'Supplier'})
 	Order.hasMany(Product, {as: 'Products'})
+	Supplier.hasMany(Product, {as: 'Products'}
+	
 	
     connection.sync(); // create tables if dont exist
 

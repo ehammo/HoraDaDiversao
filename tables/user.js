@@ -16,7 +16,7 @@ class User{
 	constructor(){}
 	
 	//create
-	createUser(name, email,pass,address,phone,kids,orders){
+	createUser(name, email,pass,address,phone,kids,carrinho){
 		UserTable.find({
 			where: {email : email}
 		})
@@ -34,7 +34,7 @@ class User{
 					phone: phone
 				}).then(function (user2) {
 					user2.setKids(kids);
-					user2.setHistory(orders);
+					user2.setHistory(carrinho);
 					console.log("created user: " + JSON.stringify(user2.dataValues) );
 					return(user2);
 				});
@@ -69,7 +69,7 @@ class User{
 
 	};
 
-	updateUser(name, email,pass,address,phone,kids,orders){
+	updateUser(name, email,pass,address,phone,kids,carrinho){
 		UserTable.update({
 			name: name,
 			email: email,
@@ -82,7 +82,7 @@ class User{
 				where: {email : email}
 			}).then(function(user){			
 				user.setKids(kids);
-				user.setHistory(orders);
+				user.setHistory(carrinho);
 				return(user);
 				console.log(user);
 				console.log('updated %d users to: (%s,%s,%s)',user,name,email,password,address,phone);
