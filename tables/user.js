@@ -68,24 +68,36 @@ class User{
   			}
   		});
 		});
-
 	};
 
-	updateUser(name, email,pass,address,phone){
-		UserTable.update({
-			name: name,
-			email: email,
-			password: pass,
-			address:address,
-			phone: phone
-		}, { where : {email : email }
-		}).then((query) => {
-			UserTable.find({
-				where: {email : email}
-			}).then(function(user){
-				return(user);
-				console.log(user);
-				console.log('updated %d users to: (%s,%s,%s)',user,name,email,password,address,phone);
+	readUsers(){
+		return new Promise(function (resolve,reject){
+			UserTable.findAll({
+			}).then(function(users){
+				resolve(users);
+			});
+		});
+	};
+
+	updateUser(name, email,password,address,phone){
+		return new Promise(function (resolve,reject){
+			UserTable.update({
+				name: name,
+				email: email,
+				password: password,
+				address:address,
+				phone: phone
+			}, { where : {email : email }
+			}).then((query) => {
+				UserTable.find({
+					where: {email : email}
+				}).then(function(user){
+					if (user)
+						resolve (user);
+					else
+						reject (user);
+					console.log('updated %d users to: (%s,%s,%s)',user,name,email,password,address,phone);
+				});
 			});
 		});
 	}
@@ -93,13 +105,15 @@ class User{
   	// TODO falta verificar se a senha bate
 	// TODO falta verificar se existe pedidos em andamento
 	// TODO falta apagar os pedidos e as crianças dependentes.
+		return new Promise(function (resolve,reject){
 
-  	UserTable.destroy({
-  		where : { email: email}
-  	}).then(function (user) {
-  		return ([user]);
-  		console.log("removed %d users and references with email: %s",user, email);
-  	});
+	  	UserTable.destroy({
+	  		where : { email: email}
+	  	}).then(function (user) {
+				resolve([user]);
+	  		console.log("removed %d users and references with email: %s",user, email);
+	  	});
+		});
 
 	}
 
