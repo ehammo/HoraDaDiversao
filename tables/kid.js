@@ -28,7 +28,6 @@ class Kid{
 				KidTable.create({
 					name: name,
 					id: id,
-					password: pass,
 					gender: gender,
 					birth: birth
 				}).then(function (Kid2) {
@@ -64,14 +63,13 @@ class Kid{
 		KidTable.update({
 			name: name,
 			id: id,
-			password: pass,
 			gender: gender,
 			birth: birth
 		}, { where : {id : id }
 		}).then(function (Kid) {
 			return(Kid);
 			console.log(Kid);
-			console.log('updated %d Kids to: (%s,%s,%s)',Kid,name,id,password,gender,birth);
+			console.log('updated %d Kids to: (%s,%s,%s)',Kid,name,id,gender,birth);
 		});
 	};
 	

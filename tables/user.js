@@ -49,9 +49,15 @@ class User{
   		}).then(function(user){
   			if (user) { // not found returns null
 				console.log("found user: " + JSON.stringify(user.dataValues) );
-//				console.log("\n\n");
-//				var kids = user.getKids();
-//				console.log(kids[0]);
+				console.log("\n\n");
+				user.getKids().then((kids) => {
+					var counter = 0;
+					for (counter; counter < kids.length; counter++) {
+						var values = kids[counter].dataValues;
+						console.log(JSON.stringify(values)+"\n\n");
+					}
+					
+				});
 				return(user);
   				
   			} else{

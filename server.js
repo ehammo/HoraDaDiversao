@@ -45,29 +45,56 @@ app.get("/",function(req,res){
 		console.log('index');
 });
 
+
+//User
 app.post("/user/create/",function(req,res){
   var name = req.body.name;
   var email = req.body.email;
   var password = req.body.password;
   var address = req.body.address;
   var phone = req.body.phone;
-  console.log(name);
-  console.log(email);
-  console.log(password);
-  console.log(address);
-  console.log(phone);
   var kidstest = ["id1","id2","id3"];
   var orderstest = ["id11","id22","id33"];	
   var ret = user.createUser(name,email,password,address,phone,kidstest,orderstest);
-  res.send(ret);
-  console.log(ret);
+  res.send("okay");
+});
+
+app.post("/user/read/", function(req,res){
+	var email = req.body.email;
+	console.log("email: "+email);
+	user.readUser(email);
+	res.send("okay");
+});
+
+
+app.get("/user/read/:email", function(req,res){
+	var email = req.params.email;
+	console.log("email: "+email);
+	user.readUser(email);
+	res.send("okay");
+});
+
+//Kid
+
+app.post("/Kid/create/",function(req,res){
+  var name = req.body.name;
+  var id = req.body.id;
+  var gender = req.body.gender;
+  var birth = req.body.birth;
+  var ret = kid.createKid(name,id,gender,birth);
+  res.send("okay");
+});
+
+app.get("/kid/read/:id", function(req,res){
+	var id = req.params.id;
+	kid.readKid(id);
+	res.send("okay");
 });
 
 app.post("/hue/", function(req,res){
 	var email = req.body.email;
 	
-	user.readUser(email);
-	res.send("okay");
+	
 });
 
 
