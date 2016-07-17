@@ -40,21 +40,22 @@ class Shopcart{
 									qtd: qtd,
 									date: date,
 									address: address,
-									status: status
+									status: status,
+									UserEmail: email
 								}).then((Shopcart2)=> {
 									user.getHistory().then((shops) => {
-										// var count = 0;
-										// var resp = [];
-										// for(count;count<shops.length;shops++){
-										// 	var v = shops[count].id;
-										// 	resp.push(v);
-										// }
-										// resp.push(Shopcart2.id);
-										// user.setHistory(resp);
-										//
-										// Shopcart2.setOrders(orders);
-										// console.log("created Shopcart: " + JSON.stringify(Shopcart2.dataValues) );
-										// resolve(Shopcart2);
+										var count = 0;
+										var resp = [];
+										for(count;count<shops.length;shops++){
+										 	var v = shops[count].id;
+										 	resp.push(v);
+										}
+										resp.push(Shopcart2.id);
+										user.setHistory(resp);
+										
+										Shopcart2.setProducts(products);
+										console.log("created Shopcart: " + JSON.stringify(Shopcart2.dataValues) );
+										resolve(Shopcart2);
 									});
 
 								});
@@ -101,31 +102,36 @@ class Shopcart{
 				qtd: qtd,
 				date: date,
 				address: address,
-				status: status
+				status: status,
+				UserEmail: email
 			}, { where : {id : id }
-			}).then((Shopcart2)=> {
+			}).then((Shopcart)=> {
 				UserTable.find({
 					where: {email: email}
-				}).then(function(user2){
+				}).then(function(user){
 					if(!user){
 						console.log("error! no user found");
 						reject ("err");
 					}else{
-						user2.getHistory().then((shops) => {
-							var count = 0;
-							var resp = [];
-							for(count;count<shops.length;shops++){
-								var v = shops[count].id;
-								resp.push(v);
-							}
-							resp.push(ShopCart2.id);
-							user2.setHistory(resp);
+						ShopcartTable.find({
+							where: {id:id}
+						}).then((Shopcart2)=>{
+							user.getHistory().then((shops) => {
+								var count = 0;
+								var resp = [];
+								for(count;count<shops.length;shops++){
+									var v = shops[count].id;
+									resp.push(v);
+								}
+								resp.push(Shopcart2.id);
+								user.setHistory(resp);
+								console.log(Shopcart2);
+								Shopcart2.setProducts(products);
+								resolve(Shopcart2);
+							});
 						});
 					}
 				});
-				Shopcart.setOrders(orders);
-				resolve(Shopcart);
-				console.log(Shopcart);
 	//			console.log('updated %d Shopcarts to: (%s,%s,%s)',Shopcart,id,status,orders);
 				});
 		});

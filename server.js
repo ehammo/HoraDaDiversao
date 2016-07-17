@@ -239,15 +239,13 @@ app.get("/shopcart/",function(req,res){
 
 app.post("/shopcart/create/",function(req,res){
 	var id = req.body.id;
-  var qtd = req.body.id;
-  var date = req.body.date;
-  var address = req.body.address;
+	var qtd = ["23","55"];
+	var date = req.body.date;
+	var address = req.body.address;
 	var status = req.body.status;
-  var products = req.body.products;
+	var products = ["lo","ol"];
 	var email = req.body.email;
-  console.log("email: " + email);
-	var orders = ["Pedido1", "Pedido2"];
-
+	console.log("email: " + email);
 	var ret = shopcart.createShopcart(id,qtd,date,address,status,products,email);
 	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
@@ -266,11 +264,15 @@ app.post("/shopcart/delete",function(req,res){
 });
 
 app.post("/shopcart/update/",function(req,res){
-	var id = req.body.id;
+var id = req.body.id;
+	var qtd = ["23","55"];
+	var date = req.body.date;
+	var address = req.body.address;
 	var status = req.body.status;
+	var products = ["lo","ol"];
 	var email = req.body.email;
-	var orders = ["Pedido1", "Pedido2"];
-	var ret = shopcart.updateShopcart(id,status,orders,email);
+	console.log("email: " + email);
+	var ret = shopcart.updateShopcart(id,qtd,date,address,status,products,email);
 	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
