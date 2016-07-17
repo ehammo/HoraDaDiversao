@@ -13,10 +13,10 @@ function setKid() {
 	UserTable = Adapter.User;
 }
 
-class Kid{	
-	
+class Kid{
+
 	constructor(){}
-	
+
 	//create
 	createKid(name, id,gender,birth,user){
 		return new Promise(function(resolve,reject){
@@ -26,13 +26,13 @@ class Kid{
 			.then(function(Kid){
 				if (Kid) {
 					console.log("error! already has Kid with id " + id);
-					reject("Erro! Já existe um Kid cadastrado com o id " + id);
+					reject("Erro! Jï¿½ existe um Kid cadastrado com o id " + id);
 				} else{
 					UserTable.find({
 					where: {email: user}
 					}).then(function(user){
 						if(!user){
-							console.log("error! no user found");
+							console.log("error! no user found with email " + user);
 							reject("error! no user found");
 						}else{
 							KidTable.create({
@@ -56,9 +56,9 @@ class Kid{
 							});
 						}
 					});
-					
+
 				}
-						
+
 			});
 		});
 	};
@@ -70,14 +70,23 @@ class Kid{
 			}).then(function(Kid){
 				if (Kid) { // not found returns null
 					console.log("found Kid: " + JSON.stringify(Kid.dataValues) );
-	//				TODO checar de qual user é?
+	//				TODO checar de qual user ï¿½?
 					resolve(Kid);
-					
+
 				} else{
 					reject("did not found Kid with id "+id);
-					//res.send("Erro! Não encontrou usuário com id " + id);
+					//res.send("Erro! Nï¿½o encontrou usuï¿½rio com id " + id);
 					console.log("did not found Kid with id " + id);
 				}
+			});
+		});
+	};
+
+	readKids(){ // get mesmo?
+		return new Promise(function(resolve,reject){
+			KidTable.findAll({
+			}).then(function(kids){
+				resolve(kids);
 			});
 		});
 	};
@@ -117,30 +126,30 @@ class Kid{
 					});
 				}else{
 					reject("error! no kid found");
-				
-				
+
+
 				}
 			});
 		});
 	};
-	
+
 	deleteKid(id){
   	// TODO falta verificar se a senha bate
 	return new Promise(function(resolve,reject){
 		KidTable.destroy({
 			where : { id: id}
-		}).then(function (Kid) {
+		}).then(function (kid) {
 			if(kid>0){
-				resolve("removed %d Kids and references with id: %s",Kid, id);
+				resolve("removed %d Kids and references with id: %s",kid, id);
 			}else{
 				reject("No kids found")
 			}
 		});
-	
-		});	
+
+		});
 	}
-	
-	
+
+
 }
 
 

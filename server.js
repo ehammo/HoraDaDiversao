@@ -58,6 +58,11 @@ app.get("/",function(req,res){
 
 
 //User
+app.get("/user/", function(req,res){
+	var ret = user.readUsers();
+  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
+});
+
 app.post("/user/create/",function(req,res){
   var name = req.body.name;
   var email = req.body.email;
@@ -70,11 +75,11 @@ app.post("/user/create/",function(req,res){
   ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
-app.post("/user/delete",function(req,res){
-	var email = req.body.email;
-
-	user.deleteUser(email);
-	res.send("ok");
+app.get("/user/read/", function(req,res){
+	var email = req.params.email;
+	console.log("email: "+email);
+	var ret = user.readUser(email);
+  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/user/update/",function(req,res){
@@ -84,15 +89,14 @@ app.post("/user/update/",function(req,res){
 	var address = req.body.address;
 	var phone = req.body.phone;
 	var ret = user.updateUser(name,email,password,address,phone);
-	res.send("okay");
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
-app.get("/user/read/", function(req,res){
-	var email = req.params.email;
-	console.log("email: "+email);
-	var ret = user.readUser(email);
-  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
-	//res.send("okay");
+app.post("/user/delete",function(req,res){
+	var email = req.body.email;
+
+	var ret = user.deleteUser(email);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 
@@ -100,47 +104,45 @@ app.get("/user/read/", function(req,res){
 	var email = req.params.email;
 	console.log("email: "+email);
 	user.readUser(email);
-	res.send("okay");
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });*/
 
 //Kid
+app.get("/kid/", function(req,res){
+	var ret = kid.readKids();
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
+});
 
 app.post("/kid/create/",function(req,res){
 	var name = req.body.name;
 	var id = req.body.id;
 	var gender = req.body.gender;
 	var birth = req.body.birth;
-	var email = req.body.UserEmail;
+	var email = req.body.userEmail;
 	var ret = kid.createKid(name,id,gender,birth,email);
 	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
-/*app.get("/kid/read/:id", function(req,res){
+app.get("/kid/read/", function(req,res){
 	var id = req.params.id;
-	kid.readKid(id);
-	res.send("okay");
-});*/
-
-app.post("/kid/read/", function(req,res){
-	var id = req.body.id;
 	console.log("id: "+id);
 	var ret = kid.readKid(id);
 	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
+app.post("/kid/update/",function(req,res){
+  var name = req.body.name;
+  var id = req.body.id;
+  var gender = req.body.gender;
+  var birth = req.body.birth;
+  var email = req.body.userEmail;
+  var ret = kid.updateKid(name,id,gender,birth,email);
+  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
+});
+
 app.post("/kid/delete",function(req,res){
 	var id = req.body.id;
 	var ret = kid.deleteKid(id);
-	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
-});
-
-app.post("/kid/update/",function(req,res){
-	var name = req.body.name;
-	var id = req.body.id;
-	var gender = req.body.gender;
-	var birth = req.body.birth;
-	var email = req.body.UserEmail;
-	var ret = kid.updateKid(name,id,gender,birth,email);
 	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
@@ -156,20 +158,20 @@ app.post("/order/create/",function(req,res){
   var address = req.body.address;
   var status = req.body.status;
   var ret = order.createOrder(id,qtd,date,address,status,products);
-  res.send("okay");
+  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/order/read/", function(req,res){
 	var id = req.body.id;
 	console.log("id: "+id);
 	order.readOrder(id);
-	res.send("okay");
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/order/delete",function(req,res){
 	var id = req.body.id;
 	order.deleteOrder(id);
-	res.send("ok");
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/order/update/",function(req,res){
@@ -180,10 +182,15 @@ app.post("/order/update/",function(req,res){
 	var address = req.body.address;
 	var status = req.body.status;
 	var ret = order.updateOrder(id,qtd,date,address,status,products);
-	res.send("okay");
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 */
 //product
+
+app.get("/product/", function(req,res){
+	var ret = product.readProducts();
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
+});
 
 app.post("/product/create/",function(req,res){
 	var name = req.body.name;
@@ -194,57 +201,68 @@ app.post("/product/create/",function(req,res){
 	var description = req.body.description;
 	var category = req.body.category;
 	var ret = product.createProduct(name, id,price,photo,availability,description, category);
-	res.send("okay");
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
-app.post("/product/read/", function(req,res){
-	var id = req.body.id;
+app.get("/product/read/:id", function(req,res){
+	var id = req.params.id;
 	console.log("id: "+id);
-	product.readProduct(id);
-	res.send("okay");
+	var ret = product.readProduct(id);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
+});
+
+app.post("/product/update/",function(req,res){
+  var name = req.body.name;
+  var id = req.body.id;
+  var price = req.body.price;
+  var photo = req.body.photo;
+  var availability = req.body.availability;
+  var description = req.body.description;
+  var category = req.body.category;
+  var ret = product.updateProduct(name, id,price,photo,availability,description, category);
+  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/product/delete",function(req,res){
 	var id = req.body.id;
-	product.deleteProduct(id);
-	res.send("ok");
+	var ret = product.deleteProduct(id);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
-app.post("/product/update/",function(req,res){
-	var name = req.body.name;
-	var id = req.body.id;
-	var price = req.body.price;
-	var photo = req.body.photo;
-	var availability = req.body.availability;
-	var description = req.body.description;
-	var category = req.body.category;
-	var ret = product.updateProduct(name, id,price,photo,availability,description, category);
-	res.send("okay");
-});
 
 //shopcart
 
+app.get("/shopcart/",function(req,res){
+	var ret = shopcart.readShopcarts();
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
+});
 
 app.post("/shopcart/create/",function(req,res){
 	var id = req.body.id;
+  var qtd = req.body.id;
+  var date = req.body.date;
+  var address = req.body.address;
 	var status = req.body.status;
+  var products = req.body.products;
 	var email = req.body.email;
+  console.log("email: " + email);
 	var orders = ["Pedido1", "Pedido2"];
-	var ret = shopcart.createShopcart(id,status,orders,email);
-	res.send("okay");
+
+	var ret = shopcart.createShopcart(id,qtd,date,address,status,products,email);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
-app.post("/shopcart/read/", function(req,res){
-	var id = req.body.id;
+app.get("/shopcart/read/", function(req,res){
+	var id = req.params.id;
 	console.log("id: "+id);
-	shopcart.readShopcart(id);
-	res.send("okay");
+	var ret = shopcart.readShopcart(id);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/shopcart/delete",function(req,res){
 	var id = req.body.id;
-	shopcart.deleteShopcart(id);
-	res.send("ok");
+	var ret = shopcart.deleteShopcart(id);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/shopcart/update/",function(req,res){
@@ -253,10 +271,15 @@ app.post("/shopcart/update/",function(req,res){
 	var email = req.body.email;
 	var orders = ["Pedido1", "Pedido2"];
 	var ret = shopcart.updateShopcart(id,status,orders,email);
-	res.send("okay");
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 //supplier
+
+app.get("/supplier/", function(req,res){
+	var ret = supplier.readSuppliers();
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
+});
 
 app.post("/supplier/create/",function(req,res){
   var name = req.body.name;
@@ -269,14 +292,14 @@ app.post("/supplier/create/",function(req,res){
   var categories = ["id11","id22","id33"];
   var products = ["Product 1","Product 2","Product 3","Product 4"]
   var ret = supplier.createSupplier(name, id,password,address,phone,banner,description,categories,products);
-  res.send("okay");
+  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
-app.post("/supplier/delete",function(req,res){
-	var id = req.body.id;
-
-	user.deleteSupplier(id);
-	res.send("ok");
+app.get("/supplier/read/", function(req,res){
+  var id = req.params.id;
+  console.log("id: "+id);
+  var ret = supplier.readSupplier(id);
+  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 app.post("/supplier/update/",function(req,res){
@@ -290,14 +313,13 @@ app.post("/supplier/update/",function(req,res){
 	var categories = ["id11","id22","id33"];
 	var products = ["Product 1","Product 2","Product 3","Product 4"]
 	var ret = supplier.updateSupplier(name, id,password,address,phone,banner,description,categories,products);
-	res.send("okay");
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
-app.post("/supplier/read/", function(req,res){
-	var id = req.body.id;
-	console.log("id: "+id);
-	supplier.readSupplier(id);
-	res.send("okay");
+app.post("/supplier/delete",function(req,res){
+  var id = req.body.id;
+  var ret = supplier.deleteSupplier(id);
+  ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
 // listen (start app with node server.js) ======================================

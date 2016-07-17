@@ -44,38 +44,50 @@ class Product{
 
 	}
 
-	readProduct(id){ // get mesmo?
+	readProduct(id){
+		return new Promise(function (resolve,reject){
   		ProductTable.find({
   			where: {id : id}
   		}).then(function(Product){
   			if (Product) { // not found returns null
 				console.log("found Product: " + JSON.stringify(Product.dataValues) );
 //				TODO checar de qual user �?
-				return(Product);
+				resolve(Product);
 
   			} else{
-				return(Product);
   				//res.send("Erro! N�o encontrou usu�rio com id " + id);
   				console.log("did not found Product with id " + id);
+					reject("not found");
   			}
   		});
+		});
+	};
 
+	readProducts(){
+		return new Promise(function (resolve,reject){
+			ProductTable.findAll({
+			}).then(function(products){
+				resolve(products);
+			});
+		});
 	};
 
 	updateProduct(name, id,price,photo,availability,description, category){
-		ProductTable.update({
-			name: name,
-			id: id,
-			price: price,
-			photo: photo,
-			availability: availability,
-			description: description,
-			category: category
-		}, { where : {id : id }
-		}).then(function (Product) {
-			return(Product);
-			console.log(Product);
-			console.log('updated %d Products to: (%s,%s,%s)',Product,name, id,price,photo,availability,description, category);
+		return new Promise(function (resolve,reject){
+			ProductTable.update({
+				name: name,
+				id: id,
+				price: price,
+				photo: photo,
+				availability: availability,
+				description: description,
+				category: category
+			}, { where : {id : id }
+			}).then(function (Product) {
+				resolve(Product);
+				console.log(Product);
+				console.log('updated %d Products to: (%s,%s,%s)',Product,name, id,price,photo,availability,description, category);
+			});
 		});
 	};
 
@@ -84,18 +96,16 @@ class Product{
 	// TODO falta verificar se h� pedidos em andamento com esse produto. Caso haja, este produto torna-se
 		//indisponivel para outros usuarios at� os pedidos finalizarem
 
-  	ProductTable.destroy({
-  		where : { id: id}
-  	}).then(function (Product) {
-  		return ([Product]);
-  		console.log("removed %d Products and references with id: %s",Product, id);
-  	});
-
+		return new Promise(function (resolve,reject){
+	  	ProductTable.destroy({
+	  		where : { id: id}
+	  	}).then(function (Product) {
+	  		resolve ([Product]);
+	  		console.log("removed %d Products and references with id: %s",Product, id);
+	  	});
+		});
 	}
-
-
 }
-
 
 module.exports = {
 	Product: Product,

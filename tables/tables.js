@@ -12,8 +12,10 @@ module.exports = function(connection) {
         },
         password: Sequelize.STRING,
         address: Sequelize.STRING,
-		phone: Sequelize.STRING
+		    phone: Sequelize.STRING
     });
+
+    // TODO: nao precisa criar um id. o sequelize coloca um ID automatico auto incremental se nao tiver PK
 
     var Kid = connection.define('Kid', {
         name: Sequelize.STRING,
@@ -33,9 +35,9 @@ module.exports = function(connection) {
         },
         price: Sequelize.STRING,
         photo: Sequelize.STRING, //photo adress on net
-		availability: Sequelize.BOOLEAN,
-		description: Sequelize.STRING,
-		category: Sequelize.STRING
+  		availability: Sequelize.BOOLEAN,
+  		description: Sequelize.STRING,
+  		category: Sequelize.STRING
     });
 
     var ShopCart = connection.define('ShopCart', {
@@ -43,10 +45,10 @@ module.exports = function(connection) {
             type: Sequelize.STRING,
             primaryKey: true
         },
-		qtd: Sequelize.ARRAY(Sequelize.INTEGER),
-		date: Sequelize.STRING,
-		address: Sequelize.STRING,
-		status: Sequelize.STRING
+  		qtd: Sequelize.ARRAY(Sequelize.INTEGER),
+  		date: Sequelize.STRING,
+  		address: Sequelize.STRING,
+  		status: Sequelize.STRING
     });
 
 /*    var Order = connection.define('Order', {
