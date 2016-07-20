@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');    // pull information from HTML POST (
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
 // configuration =================
-var env = process.env.NODE_ENV || 'development';
+var env = process.env.NODE_ENV || 'production';
 var config = require('./config')[env];
 var db = config.database;
 var connection = new Sequelize(db.db, db.user, db.password, {
@@ -239,13 +239,12 @@ app.get("/shopcart/",function(req,res){
 
 app.post("/shopcart/create/",function(req,res){
 	var id = req.body.id;
-	var qtd = ["23","55"];
 	var date = req.body.date;
 	var address = req.body.address;
 	var status = req.body.status;
-	var products = ["lo","ol"];
+  var products = JSON.parse(req.body.products);
+  var qtd = JSON.parse(req.body.qtd);
 	var email = req.body.email;
-	console.log("email: " + email);
 	var ret = shopcart.createShopcart(id,qtd,date,address,status,products,email);
 	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
@@ -265,11 +264,11 @@ app.post("/shopcart/delete",function(req,res){
 
 app.post("/shopcart/update/",function(req,res){
 var id = req.body.id;
-	var qtd = ["23","55"];
 	var date = req.body.date;
 	var address = req.body.address;
 	var status = req.body.status;
-	var products = ["lo","ol"];
+  var products = JSON.parse(req.body.products);
+  var qtd = JSON.parse(req.body.qtd);
 	var email = req.body.email;
 	console.log("email: " + email);
 	var ret = shopcart.updateShopcart(id,qtd,date,address,status,products,email);
