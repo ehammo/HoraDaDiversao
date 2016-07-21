@@ -42,7 +42,7 @@ class Product{
 							availability: availability,
 							description: description,
 							category: category,
-							supplierId: supplierId
+							SupplierId: supplierId
 						}).then(function (Product2) {
 							console.log("created Product: " + JSON.stringify(Product2.dataValues) );
 							resolve (Product2);
@@ -94,7 +94,7 @@ class Product{
 				availability: availability,
 				description: description,
 				category: category,
-				supplierId: supplierId
+				SupplierId: supplierId
 			}, { where : {id : id }
 			}).then(function (Product) {
 				resolve(Product);
