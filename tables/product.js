@@ -1,6 +1,7 @@
 'use strict';
 var Adapter;
 var ProductTable;
+var SupplierTable;
 
 function setAdapter(adapter) {
 	Adapter = adapter;
@@ -9,6 +10,7 @@ function setAdapter(adapter) {
 
 function setProduct() {
 	ProductTable = Adapter.Product;
+	SupplierTable = Adapter.Supplier;
 }
 
 class Product{
@@ -16,7 +18,7 @@ class Product{
 	constructor(){}
 
 	//create
-	createProduct(name, id,price,photo,availability,description, category){
+	createProduct(name, id,price,photo,availability,description, category,supplierId){
 		return new Promise(function (resolve,reject){
 			ProductTable.find({
 				where: {id : id}
@@ -26,18 +28,28 @@ class Product{
 					console.log("error! already has Product with id " + id);
 					reject ("Erro! J� existe um Product cadastrado com o id " + id);
 				} else{
-					ProductTable.create({
-						name: name,
-						id: id,
-						price: price,
-						photo: photo,
-						availability: availability,
-						description: description,
-						category: category
-					}).then(function (Product2) {
-						console.log("created Product: " + JSON.stringify(Product2.dataValues) );
-						resolve (Product2);
+					SupplierTable.find({
+						where: {id:supplierId}
+					}).then(function (s){
+						if(!s){
+							reject("Erro! não existe um supplier cadastrado com o id"+supplierId);
+						}else{
+							ProductTable.create({
+							name: name,
+							id: id,
+							price: price,
+							photo: photo,
+							availability: availability,
+							description: description,
+							category: category,
+							supplierId: supplierId
+						}).then(function (Product2) {
+							console.log("created Product: " + JSON.stringify(Product2.dataValues) );
+							resolve (Product2);
+						});
+					}
 					});
+
 				}
 			});
 		});
@@ -72,7 +84,7 @@ class Product{
 		});
 	};
 
-	updateProduct(name, id,price,photo,availability,description, category){
+	updateProduct(name, id,price,photo,availability,description, category,supplierId){
 		return new Promise(function (resolve,reject){
 			ProductTable.update({
 				name: name,
@@ -81,7 +93,8 @@ class Product{
 				photo: photo,
 				availability: availability,
 				description: description,
-				category: category
+				category: category,
+				supplierId: supplierId
 			}, { where : {id : id }
 			}).then(function (Product) {
 				resolve(Product);
