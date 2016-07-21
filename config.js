@@ -7,7 +7,10 @@ development: {
       db: 'horadiversao',
       user: 'postgres',
       password: 'admin',
-      dialect: 'postgres'
+      dialect: 'postgres',
+      dialectOptions: {
+          ssl: false
+      }
   }
 },
 production: {
@@ -18,7 +21,10 @@ production: {
         db: 'dat2hi7sqoj2a',
         user: 'gnsesdgeqyxwlz',
         password: 'ZPitUSahyyI-yXgSWEhVGQMb7Y',
-        dialect: 'postgres'
+        dialect: 'postgres',
+        dialectOptions: {
+            ssl: true
+        }
     }
 }
 };

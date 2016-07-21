@@ -16,7 +16,12 @@ class User {
     constructor() {}
 
     //create
-    createUser(name, email, pass, address, phone) {
+    createUser(user) {
+      var name = user.name;
+      var email = user.email;
+      var password = user.password;
+      var address = user.address;
+      var phone = user.phone;
         return new Promise(function(resolve, reject) {
             UserTable.find({
                     where: {
@@ -33,7 +38,7 @@ class User {
                         UserTable.create({
                             name: name,
                             email: email,
-                            password: pass,
+                            password: password,
                             address: address,
                             phone: phone
                         }).then((user2) => {
@@ -109,7 +114,7 @@ class User {
             });
         });
     }
-	
+
 	deleteUserRead(email) {
         // TODO falta verificar se a senha bate
         // TODO falta verificar se existe pedidos em andamento
@@ -129,7 +134,7 @@ class User {
 
     }
 
-	
+
     deleteUser(email) {
         // TODO falta verificar se a senha bate
         // TODO falta verificar se existe pedidos em andamento

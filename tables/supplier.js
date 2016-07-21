@@ -16,32 +16,41 @@ class Supplier {
     constructor() {}
 
     //create
-    createSupplier(name, pass, address, phone, banner, description, categories, products) {
+    createSupplier(supplier) {
+        var name = supplier.name;
+        var password = supplier.password;
+        var address = supplier.address;
+        var phone = supplier.phone;
+        var banner = supplier.banner;
+        var description = supplier.description;
+        var categories = supplier.categories;
+        var products = supplier.products;
+
         return new Promise(function(resolve, reject) {
             SupplierTable.findAll({
-				
-			}).then(function(suppliers) {
-				var count =0;
-				for (count; count<suppliers.length;count++){
-					if(suppliers[count].name==name){
-						reject("Error! There is a supplier with this name");
-					}
-				}
-				SupplierTable.create({
-					name: name,
-					password: pass,
-					address: address,
-					phone: phone,
-					banner: banner,
-					description: description,
-					categories: categories
-				}).then(function(supplier2) {
-					supplier2.setProducts(products);
-					console.log("created supplier: " + JSON.stringify(supplier2.dataValues));
-					resolve(supplier2);
-				});
-                    
+
+            }).then(function(suppliers) {
+                var count = 0;
+                for (count; count < suppliers.length; count++) {
+                    if (suppliers[count].name == name) {
+                        reject("Error! There is a supplier with this name");
+                    }
+                }
+                SupplierTable.create({
+                    name: name,
+                    password: password,
+                    address: address,
+                    phone: phone,
+                    banner: banner,
+                    description: description,
+                    categories: categories
+                }).then(function(supplier2) {
+                    supplier2.setProducts(products);
+                    console.log("created supplier: " + JSON.stringify(supplier2.dataValues));
+                    resolve(supplier2);
                 });
+
+            });
         });
 
     }
@@ -78,43 +87,43 @@ class Supplier {
     updateSupplier(name, id, pass, address, phone, banner, description, categories, products) {
         return new Promise(function(resolve, reject) {
             SupplierTable.findAll({
-				
-			}).then(function(suppliers) {
-				var count =0;
-				for (count; count<suppliers.length;count++){
-					if(suppliers[count].name==name){
-						reject("Error! There is a supplier with this name");
-					}
-				}			
-				SupplierTable.update({
-					name: name,
-					id: id,
-					password: pass,
-					address: address,
-					phone: phone,
-					banner: banner,
-					description: description,
-					categories: categories
-				}, {
-					where: {
-						id: id
-					}
-				}).then((query) => {
-					SupplierTable.find({
-						where: {
-							id: id
-						}
-					}).then(function(supplier) {
-						supplier.setProducts(products)
-						console.log(supplier);
-						console.log('updated %d suppliers to: (%s,%s,%s)', supplier, name, id, pass, address, phone, banner, description, categories);
-						resolve(supplier);
-					});
-				});
-			});
-		});
+
+            }).then(function(suppliers) {
+                var count = 0;
+                for (count; count < suppliers.length; count++) {
+                    if (suppliers[count].name == name) {
+                        reject("Error! There is a supplier with this name");
+                    }
+                }
+                SupplierTable.update({
+                    name: name,
+                    id: id,
+                    password: pass,
+                    address: address,
+                    phone: phone,
+                    banner: banner,
+                    description: description,
+                    categories: categories
+                }, {
+                    where: {
+                        id: id
+                    }
+                }).then((query) => {
+                    SupplierTable.find({
+                        where: {
+                            id: id
+                        }
+                    }).then(function(supplier) {
+                        supplier.setProducts(products)
+                        console.log(supplier);
+                        console.log('updated %d suppliers to: (%s,%s,%s)', supplier, name, id, pass, address, phone, banner, description, categories);
+                        resolve(supplier);
+                    });
+                });
+            });
+        });
     }
-	
+
     deleteSupplier(id) {
         // TODO falta verificar se a senha bate
         // TODO falta verificar se existe pedidos em andamento
@@ -131,8 +140,8 @@ class Supplier {
             });
         });
     }
-	
-	deleteSupplierRead(id) {
+
+    deleteSupplierRead(id) {
         // TODO falta verificar se a senha bate
         // TODO falta verificar se existe pedidos em andamento
         // TODO falta apagar os pedidos e as crian�as dependentes.
@@ -144,8 +153,8 @@ class Supplier {
                 }
             }).then(function(supplier) {
                 SupplierTable.findAll({}).then(function(suppliers) {
-					resolve(suppliers);
-				});
+                    resolve(suppliers);
+                });
             });
         });
     }

@@ -11,10 +11,8 @@ var config = require('./config')[env];
 var db = config.database;
 var connection = new Sequelize(db.db, db.user, db.password, {
     host: db.host,
-    dialect: 'postgres',
-    dialectOptions: {
-        ssl: false
-    }
+    dialect: db.dialect,
+    dialectOptions: db.dialectOptions
 }); // connect to database
 
 
@@ -75,23 +73,136 @@ app.get("/resetdb", function(req, res) {
     });
     res.send("resetou!");
     console.log("resetou!");
-
-    // connection.query('SET FOREIGN_KEY_CHECKS = 0') // necessario por causa da tabela ElderUser
-    // .then(function(){
-    //   return connection.sync({ force: true });
-    // })
-    // .then(function(){
-    //   return connection.query('SET FOREIGN_KEY_CHECKS = 1')
-    // })
-    // .then(function(){
-    //   console.log('Database synchronised.');
-    //   res.send('Database synchronised.');
-    // }, function(err){
-    //   console.log(err);
-    //   res.send(err);
-    // });
 });
 
+app.get("/genf", function(req, res) {
+    var tamarindus = {
+        name: "Tamarindus",
+        password: "password",
+        address: "R. Dr. José Maria, 848, Recife - PE",
+        phone: "(81) 3242-3042",
+        banner: "https://lh3.googleusercontent.com/xSeCWQgbze32oKga4-tCZsjC4ehSHl6xAMeDzyW0LVgouoHCh9RcTYDJ-HddM7FOleq1=w300",
+        description: "Tamarindus Festa é uma empresa especializada em doces e salgados,tortas em Recife. Aqui você encontra,kit festa,decoração,balão de gás hélio,torta …",
+        categories: ["doces", "salgados"]
+    };
+
+    var delidoces = {
+        name: "Deli Doces",
+        password: "password",
+        address: "Av. Caxangá, 255 - Cordeiro, Recife - PE, 50721-000",
+        phone: "(81) 3087-0707",
+        banner: "http://www.delidoces.com.br/images/logo.png",
+        description: "Toda nossa linha de doces e salgados, exclusividade Delidoces, varias lojas em recife, entrega tortas, doces, salgados, kit festa.",
+        categories: ["doces", "salgados"]
+    };
+
+    var prod1 = {
+        name: "Box 25 Salgados",
+        price: 15,
+        photo: "http://tamarindus.com.br/v2/components/com_pagseguro/pagseguro/tbs_51ac5a9d32eca45fbec132f3253ddc6b.jpg",
+        availability: true,
+        description: "Opcões: coxinha,risoles,croquete queijo e croquete camarão.",
+        category: "salgados",
+        metric: "unidade"
+    };
+
+    var prod2 = {
+        name: "Box 50 Salgados",
+        price: 26,
+        photo: "http://tamarindus.com.br/v2/components/com_pagseguro/pagseguro/tbs_3c79ebc435cb2a3849d7b780af530709.jpg",
+        availability: true,
+        description: "Opcões: coxinha,risoles,croquete queijo e croquete camarão.",
+        category: "salgados",
+        metric: "unidade"
+    };
+
+    var prod3 = {
+        name: "Box 20 brigadeiros",
+        price: 20,
+        photo: "http://tamarindus.com.br/v2/components/com_pagseguro/pagseguro/tbs_e183535eb096e4cfe046f57a9b049d13.jpg",
+        availability: true,
+        description: "20 brigadeiros",
+        category: "doces",
+        metric: "unidade"
+    };
+
+    var prod4 = {
+        name: "Torta de Brigadeiro (Kg)",
+        price: 44.90,
+        photo: "http://tamarindus.com.br/v2/components/com_pagseguro/pagseguro/tbs_46d7140882d59adb1a4ecdbce48d732e.JPG",
+        availability: true,
+        description: "Massa: de chocolate. - Recheio: de brigadeiro. - Cobertura: granulado de chocolate",
+        category: "doces",
+        metric: "Kg"
+    };
+
+    var prod5 = {
+        name: "Kit Grande (T3)",
+        price: 372.40,
+        photo: "",
+        availability: true,
+        description: "80 doces simples + torta de doce de leite ou brigadeiro (grande) + 150 coxinhas + 150 croquetes de queijos + 3 guaraná 2LT + 1 vela",
+        category: "kit",
+        metric: "unidade"
+    };
+
+    var ret;
+
+    connection.sync({
+        force: true
+    }).then(function(a) {
+        ret = supplier.createSupplier(supplier);
+        ret.then(function(data) {
+            prod1.supplierId = prod2.supplierId = prod3.supplierId = prod4.supplierId = prod5.supplierId = data.id;
+            product.createProduct(prod1);
+            product.createProduct(prod2);
+            product.createProduct(prod3);
+            product.createProduct(prod4);
+            product.createProduct(prod5);
+            res.send("doing");
+        }, function(err) {
+            res.send(err);
+        });
+    });
+});
+
+app.get("/genu", function(req, res) {
+    var joao = {
+        name: "Joao",
+        email: "joao@gmail.com",
+        password: "senha",
+        address: "",
+        phone: ""
+    };
+
+    var cart = {
+        date: "",
+        address: "",
+        status: "",
+        email: joao.email
+    };
+
+    var ret;
+
+    ret = user.createUser(joao);
+    ret.then(function(data) {
+        ret = shopcart.createShopcart(cart);
+        ret.then(function(data) {
+            var productId = req.body.productId;
+            var shopcartId = req.body.shopcartId;
+            var qtd = req.body.qtd;
+
+            shopcart.addProduct(2, 1, 2);
+            shopcart.addProduct(3, 1, 2);
+            shopcart.addProduct(4, 1, 1);
+            res.send("doing");
+        }, function(err) {
+            res.send(err);
+        });
+    }, function(err) {
+        res.send(err);
+    });
+});
 
 //User
 app.get("/user/", function(req, res) {
@@ -104,14 +215,7 @@ app.get("/user/", function(req, res) {
 });
 
 app.post("/user/create/", function(req, res) {
-    var name = req.body.name;
-    var email = req.body.email;
-    var password = req.body.password;
-    var address = req.body.address;
-    var phone = req.body.phone;
-    var kidstest = ["id1", "id2", "id3"];
-    var shopcarttest = ["carrinho1", "carrinho2", "carrinho3"];
-    var ret = user.createUser(name, email, password, address, phone);
+    var ret = user.createUser(req.body);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -208,12 +312,12 @@ app.get("/kid/read/", function(req, res) {
 });
 
 app.post("/kid/update/", function(req, res) {
-	var id = req.body.id;
-	var name = req.body.name;
+    var id = req.body.id;
+    var name = req.body.name;
     var gender = req.body.gender;
     var birth = req.body.birth;
     var email = req.body.UserEmail;
-    var ret = kid.updateKid(name, id,gender, birth, email);
+    var ret = kid.updateKid(name, id, gender, birth, email);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -293,15 +397,7 @@ app.get("/product/", function(req, res) {
 });
 
 app.post("/product/create/", function(req, res) {
-    var name = req.body.name;
-    var price = req.body.price;
-    var photo = req.body.photo;
-    var availability = req.body.availability;
-    var description = req.body.description;
-    var category = req.body.category;
-    var metric = req.body.metric;
-    var supplierId = req.body.supplierId;
-    var ret = product.createProduct(name, price, photo, availability, description, category, supplierId, metric);
+    var ret = product.createProduct(req.body);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -323,14 +419,14 @@ app.get("/product/read/:id", function(req, res) {
 app.post("/product/update/", function(req, res) {
     var name = req.body.name;
     var price = req.body.price;
-	var id = req.body.id;
+    var id = req.body.id;
     var photo = req.body.photo;
     var availability = req.body.availability;
     var description = req.body.description;
     var category = req.body.category;
     var metric = req.body.metric;
     var supplierId = req.body.supplierId;
-    var ret = product.updateProduct(name,id, price, photo, availability, description, category, supplierId, metric);
+    var ret = product.updateProduct(name, id, price, photo, availability, description, category, supplierId, metric);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -370,11 +466,7 @@ app.get("/shopcart/", function(req, res) {
 });
 
 app.post("/shopcart/create/", function(req, res) {
-    var date = req.body.date;
-    var address = req.body.address;
-    var status = req.body.status;
-    var email = req.body.email;
-    var ret = shopcart.createShopcart(date, address, status, email);
+    var ret = shopcart.createShopcart(req.body);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -415,7 +507,7 @@ app.post("/shopcart/deleteRead", function(req, res) {
 
 app.post("/shopcart/update/", function(req, res) {
     var id = req.body.id;
-	var date = req.body.date;
+    var date = req.body.date;
     var address = req.body.address;
     var status = req.body.status;
     var email = req.body.email;
@@ -473,14 +565,7 @@ app.get("/supplier/", function(req, res) {
 });
 
 app.post("/supplier/create/", function(req, res) {
-    var name = req.body.name;
-    var password = req.body.password;
-    var address = req.body.address;
-    var phone = req.body.phone;
-    var banner = req.body.banner;
-    var description = req.body.description;
-    var categories = ["id11", "id22", "id33"];
-    var ret = supplier.createSupplier(name, password, address, phone, banner, description, categories);
+    var ret = supplier.createSupplier(req.body);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {

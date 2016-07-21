@@ -14,7 +14,7 @@ function setShopcart() {
     ShopcartTable = Adapter.ShopCart;
     UserTable = Adapter.User;
     ProductTable = Adapter.Product
-	resp = [];
+    resp = [];
 }
 
 class Shopcart {
@@ -22,46 +22,50 @@ class Shopcart {
     constructor() {}
 
     //create
-    createShopcart(date, address, status, email) {
+    createShopcart(shopcart) {
+        var date = shopcart.date;
+        var address = shopcart.address;
+        var status = shopcart.status;
+        var email = shopcart.email;
         return new Promise(function(resolve, reject) {
             UserTable.find({
-				where: {
-					email: email
-				}
-			}).then(function(user) {
-				if (!user) {
-					console.log("error! no user found");
-					reject("err");
-				} else {
-					user.getHistory().then((shops)=>{
-						var counter = 0;
+                where: {
+                    email: email
+                }
+            }).then(function(user) {
+                if (!user) {
+                    console.log("error! no user found");
+                    reject("err");
+                } else {
+                    user.getHistory().then((shops) => {
+                        var counter = 0;
                         resp = [];
-						for (counter; counter < shops.length; counter++) {
+                        for (counter; counter < shops.length; counter++) {
                             var values = shops[counter].dataValues;
-                            if(values.status=="Aberto"){
-								reject("Error! There is a open shopcart in this user")
-							}
-							resp.push(shops[counter].id)
+                            if (values.status == "Aberto") {
+                                reject("Error! There is a open shopcart in this user")
+                            }
+                            resp.push(shops[counter].id)
                         }
-					}).then(()=>{
-						ShopcartTable.create({
-							date: date,
-							address: address,
-							status: status,
-							UserEmail: email
-						}).then((Shopcart2) => {
-							resp.push(Shopcart2.id);
-							user.setHistory(resp);
-							console.log("created Shopcart: " + JSON.stringify(Shopcart2.dataValues));
-							resolve(Shopcart2);
-						});
-					});
-				}
-			});
-			
-			
-		});
-	}
+                    }).then(() => {
+                        ShopcartTable.create({
+                            date: date,
+                            address: address,
+                            status: status,
+                            UserEmail: email
+                        }).then((Shopcart2) => {
+                            resp.push(Shopcart2.id);
+                            user.setHistory(resp);
+                            console.log("created Shopcart: " + JSON.stringify(Shopcart2.dataValues));
+                            resolve(Shopcart2);
+                        });
+                    });
+                }
+            });
+
+
+        });
+    }
 
     readShopcart(id) { // get mesmo?
         return new Promise(function(resolve, reject) {
@@ -115,9 +119,9 @@ class Shopcart {
                         console.log("error! no user found");
                         reject("error! no user found");
                     } else {
-						if(Shopcart.status=="Fechado"){
-							reject("Error! Can't updade a closed shopcart")
-						}else{
+                        if (Shopcart.status == "Fechado") {
+                            reject("Error! Can't updade a closed shopcart")
+                        } else {
                             user.getHistory().then((shops) => {
                                 var count = 0;
                                 var resp = [];
@@ -131,7 +135,7 @@ class Shopcart {
                                 resolve(Shopcart);
                             });
                         }
-					}
+                    }
                 });
             });
         });
@@ -207,7 +211,7 @@ class Shopcart {
         });
     }
 
-	deleteShopcartRead(id) {
+    deleteShopcartRead(id) {
         // TODO falta verificar se a senha bate
         return new Promise(function(resolve, reject) {
 
@@ -217,12 +221,12 @@ class Shopcart {
                 }
             }).then(function(Shopcart) {
                 ShopcartTable.findAll({}).then(function(shopcarts) {
-					resolve(shopcarts);
-				});
+                    resolve(shopcarts);
+                });
             });
         });
     }
-	
+
 }
 
 

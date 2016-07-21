@@ -18,7 +18,16 @@ class Product {
     constructor() {}
 
     //create
-    createProduct(name, price, photo, availability, description, category, supplierId, metric) {
+    createProduct(product) {
+      var name = product.name;
+      var price = product.price;
+      var photo = product.photo;
+      var availability = product.availability;
+      var description = product.description;
+      var category = product.category;
+      var supplierId = product.supplierId;
+      var metric = product.metric;
+
         return new Promise(function(resolve, reject) {
 			SupplierTable.find({
 				where: {
@@ -36,7 +45,7 @@ class Product {
 								reject("Error! There is a prooduct in this supplier with this name")
 							}
                         }
-					}).then(() =>{				
+					}).then(() =>{
 						ProductTable.create({
 							name: name,
 							price: price,
@@ -104,7 +113,7 @@ class Product {
 								reject("Error! There is a product in this supplier with this name")
 							}
                         }
-					}).then(() =>{				
+					}).then(() =>{
 						ProductTable.update({
 							name: name,
 							price: price,
@@ -127,7 +136,7 @@ class Product {
 				}
 			});
 
-		});	
+		});
     };
 
     deleteProductRead(id) {
@@ -145,11 +154,11 @@ class Product {
 					resolve(products);
 					console.log("removed %d Products and references with id: %s", Product, id);
 				});
-               
+
             });
         });
     }
-	
+
 	deleteProduct(id) {
         // TODO falta verificar se a senha do fornecedor bate
         // TODO falta verificar se h� pedidos em andamento com esse produto. Caso haja, este produto torna-se
@@ -161,13 +170,13 @@ class Product {
                     id: id
                 }
             }).then(function(Product) {
-                
+
 				resolve([Product]);
                 console.log("removed %d Products and references with id: %s", Product, id);
             });
         });
     }
-	
+
 }
 
 module.exports = {
