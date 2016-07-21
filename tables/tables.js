@@ -72,7 +72,8 @@ module.exports = function(connection) {
         phone: Sequelize.STRING,
 		banner: Sequelize.STRING, //photo adress on net
 		description: Sequelize.STRING,
-		categories: Sequelize.ARRAY(Sequelize.STRING)
+		categories: Sequelize.ARRAY(Sequelize.STRING),
+		metric: Sequelize.STRING
     });
 
 	var ShopCartProduct = connection.define('ShopCartProduct', {

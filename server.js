@@ -230,8 +230,9 @@ app.post("/product/create/",function(req,res){
 	var availability = req.body.availability;
 	var description = req.body.description;
 	var category = req.body.category;
+	var metric = req.body.metric;
 	var supplierId = req.body.supplierId;
-	var ret = product.createProduct(name, id,price,photo,availability,description, category,supplierId);
+	var ret = product.createProduct(name, id,price,photo,availability,description, category,supplierId,metric);
 	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 
@@ -250,8 +251,9 @@ app.post("/product/update/",function(req,res){
   var availability = req.body.availability;
   var description = req.body.description;
   var category = req.body.category;
+  var metric = req.body.metric;
   var supplierId = req.body.supplierId;
-  var ret = product.updateProduct(name, id,price,photo,availability,description,category,supplierId);
+  var ret = product.updateProduct(name, id,price,photo,availability,description,category,supplierId,metric);
   ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });
 

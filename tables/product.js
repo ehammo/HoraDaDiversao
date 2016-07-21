@@ -18,7 +18,7 @@ class Product{
 	constructor(){}
 
 	//create
-	createProduct(name, id,price,photo,availability,description, category,supplierId){
+	createProduct(name, id,price,photo,availability,description, category,supplierId,metric){
 		return new Promise(function (resolve,reject){
 			ProductTable.find({
 				where: {id : id}
@@ -42,6 +42,7 @@ class Product{
 							availability: availability,
 							description: description,
 							category: category,
+							metric: metric,
 							SupplierId: supplierId
 						}).then(function (Product2) {
 							console.log("created Product: " + JSON.stringify(Product2.dataValues) );
@@ -84,7 +85,7 @@ class Product{
 		});
 	};
 
-	updateProduct(name, id,price,photo,availability,description, category,supplierId){
+	updateProduct(name, id,price,photo,availability,description, category,supplierId, metric){
 		return new Promise(function (resolve,reject){
 			ProductTable.update({
 				name: name,
@@ -94,6 +95,7 @@ class Product{
 				availability: availability,
 				description: description,
 				category: category,
+				metric: metric,
 				SupplierId: supplierId
 			}, { where : {id : id }
 			}).then(function (Product) {
