@@ -62,7 +62,7 @@ app.get("/",function(req,res){
 		console.log('index');
 });
 
-app.get("/resetdb",function(req,res){ // bugado
+app.get("/resetdb",function(req,res){ 
   connection.sync({ force: true });
   res.send("resetou!");
   console.log("resetou!");
@@ -310,6 +310,20 @@ app.post("/shopcart/addProduct",function(req,res){
 	ret.then(function (ret2) {res.send(ret2)}, function(err){res.send(err)})
 	
 });
+
+/*
+app.get("/shopcart/getProducts/:shopcartId", function(req,res){
+	var shopcartId = req.params.shopcartId
+	var ret = shopcart.getProducts(shopcartId);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
+});*/
+
+app.post("/shopcart/getProducts/", function(req,res){
+	var shopcartId = req.body.shopcartId
+	var ret = shopcart.getProducts(shopcartId);
+	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
+});
+
 
 //supplier
 

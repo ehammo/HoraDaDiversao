@@ -156,13 +156,34 @@ class Shopcart{
 						}else{
 							console.log(qtd);
 							shopcart.addProduct(product, {qtd: qtd });	
-							resolve("cheguei");
+							resolve("Product added with sucess");
 						}
 						
 					})
 				}
 			});
 			
+		});
+	}
+	
+	getProducts(id){
+		console.log("promise");
+		return new Promise(function (resolve, reject){
+			ShopcartTable.find({
+				where: {id: id}
+			}).then(function (shopcart){
+				console.log("hey yo");
+				console.log(shopcart);
+				if(!shopcart){
+					console.log("error! no shopcart found");
+					reject("error! no shopcart found");
+				}else{
+					console.log("yay?");
+					resolve(shopcart.getProducts());
+					console.log("maorreu?");
+				}
+			
+			});
 		});
 	}
 	
