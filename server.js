@@ -11,7 +11,10 @@ var config = require('./config')[env];
 var db = config.database;
 var connection = new Sequelize(db.db, db.user, db.password, {
       host: db.host,
-      dialect: 'postgres'
+      dialect: 'postgres',
+      dialectOptions: {
+        ssl: true
+      }
 });   // connect to database
 
 
@@ -62,7 +65,7 @@ app.get("/",function(req,res){
 		console.log('index');
 });
 
-app.get("/resetdb",function(req,res){ 
+app.get("/resetdb",function(req,res){
   connection.sync({ force: true });
   res.send("resetou!");
   console.log("resetou!");
@@ -310,7 +313,7 @@ app.post("/shopcart/addProduct",function(req,res){
 	console.log(qtd);
 	var ret = shopcart.addProduct(productId,shopcartId,qtd);
 	ret.then(function (ret2) {res.send(ret2)}, function(err){res.send(err)})
-	
+
 });
 
 /*
