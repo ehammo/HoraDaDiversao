@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "description": "Simple todo application.",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev-win": "set NODE_ENV=development&& node server.js",
+    "dev-test": "set NODE_ENV=development&& mocha test/test.js",
+    "prod-test": "mocha test/test.js"
+  },
   "author": "Scotch",
   "dependencies": {
     "body-parser": "^1.4.3",
