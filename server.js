@@ -146,7 +146,7 @@ app.get("/genf", function(req, res) {
         metric: "unidade"
     };
 
-    var ret;
+    var ret, ret2;
 
     connection.sync({
         force: true
@@ -159,6 +159,24 @@ app.get("/genf", function(req, res) {
             product.createProduct(prod3);
             product.createProduct(prod4);
             product.createProduct(prod5);
+            res.send("doing");
+        }, function(err) {
+            res.send(err);
+        });
+
+        ret2 = supplier.createSupplier(delidoces);
+        ret.then(function(data) {
+            var prod1b = prod1;
+            var prod2b = prod2;
+            var prod3b = prod3;
+            var prod4b = prod4;
+            var prod5b = prod5;
+            prod1b.supplierId = prod2b.supplierId = prod3b.supplierId = prod4b.supplierId = prod5b.supplierId = data.id;
+            product.createProduct(prod1b);
+            product.createProduct(prod2b);
+            product.createProduct(prod3b);
+            product.createProduct(prod4b);
+            product.createProduct(prod5b);
             res.send("doing");
         }, function(err) {
             res.send(err);
