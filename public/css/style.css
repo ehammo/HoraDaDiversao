@@ -1,0 +1,124 @@
+body{
+
+    font-family: 'Montserrat', sans-serif;
+}
+
+.navbar-index{
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: none;
+    border-radius: 0;
+    background-color: #fff !important;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.navbar-header img{
+
+    margin-top: -25px;
+    height: 70px;
+}
+
+#navbarCollapse a{
+
+    color: #7d7d7d !important;
+}
+
+#navbarCollapse a:hover{
+
+    color: #66c4da !important;
+}
+
+#img-01{
+
+    background: url(../img/01.jpg) no-repeat center top;
+    background-position: center center;
+    min-height: 650px;
+	width: 100%;
+	-webkit-background-size: 100%;
+	-moz-background-size: 100%;
+	-o-background-size: 100%;
+	background-size: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+#img-02{
+
+    background: url(../img/02.jpg) no-repeat center top;
+    background-position: center center;
+    min-height: 650px;
+	width: 100%;
+	-webkit-background-size: 100%;
+	-moz-background-size: 100%;
+	-o-background-size: 100%;
+	background-size: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+#img-03{
+
+    background: url(../img/03.jpg) no-repeat center top;
+    background-position: center center;
+    min-height: 650px;
+	width: 100%;
+	-webkit-background-size: 100%;
+	-moz-background-size: 100%;
+	-o-background-size: 100%;
+	background-size: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.carousel-indicators .active {
+  background-color: #66c4da;
+}
+
+#info{
+
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+#info i{
+
+    color: #904492;
+}
+
+#info h4{
+
+    color: #000;
+}
+
+#info h3{
+
+    margin-bottom: 30px;
+}
+
+footer{
+
+    background-color: #904492;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+}
+
+footer img{
+
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+/*Formatação do Fornecedor*/
+
+
+
+/*Fim da formatação do Fornecedor*/

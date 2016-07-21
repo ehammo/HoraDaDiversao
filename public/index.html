@@ -1,73 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-br">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Fornecedor</title>
-
-    <script src="libs/angular/angular.js"></script>
-    <script src="libs/angular-route/angular-route.js"></script>
-
-    <!-- Bootstrap Core CSS -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>Hora da Diversão | Consultoria de Festas</title>
     <link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="libs/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
+<body>
 
-<body ng-app="HoraDiversao">
+    <nav role="navigation" class="navbar-index navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand"><img src="img/logo_hora.png" alt=""></a>
+            </div>
 
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" ng-controller="NavController as nav">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" ng-href="#/" ng-click="nav.changeClassHome()">Hora da Diversão</a>
+            <div id="navbarCollapse" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right text-uppercase">
+                    <!--<li><a href="#">Home</a></li>-->
+                    <li><a href="indexSupplier.html">Fornecedor</a></li>
+                    <li><a href="#">Cliente</a></li>
+                </ul>
+            </div>
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
-          <ul class="nav navbar-nav">
-            <li class="{{nav.generalClass}}"><a ng-href="#/" ng-click="nav.changeClassHome()">Geral</a></li>
-            <li class="{{nav.ordersClass}}"><a ng-href="#orders"
-                ng-click="nav.changeClassOrder()">Pedidos</a></li>
-            <li class="{{nav.productsClass}}"><a ng-href="#products"
-                ng-click="nav.changeClassProduct()">Produtos</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="{{nav.accountClass}}"><a>Conta</a></li>
-            <li class="{{nav.accountClass}}"><a>Sair</a></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
     </nav>
 
-    <!-- Page Content -->
-    <div class="container-fluid">
-        <div ng-view></div>
-    </div>
-    <!-- /.container-fluid -->
+    <section id="sliderhome">
+        <div id="meuSlider" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#meuSlider" data-slide-to="0" class="active"></li>
+                <li data-target="#meuSlider" data-slide-to="1" class=""></li>
+                <li data-target="#meuSlider" data-slide-to="2" class=""></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active" id="img-01"></div>
+                <div class="item" id="img-02"></div>
+                <div class="item" id="img-03"></div>
+            </div>
+        </div>
+    </section>
 
-    <!-- jQuery -->
-    <script src="libs/jquery/dist/jquery.min.js"></script>
+    <section id="info">
+        <div class="container">
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+           <div class="row text-center text-uppercase">
+              <div class="col-md-8 col-md-offset-2">
+                  <h3>Agora ficou mais fácil fazer a festa do seu filho(a)</h3>
+              </div>
+           </div>
 
-    <script src="js/app.js"></script>
-    <script src="js/controllers/homeController.js"></script>
-    <script src="js/controllers/navController.js"></script>
-    <script src="js/controllers/orderListController.js"></script>
-    <script src="js/controllers/productListController.js"></script>
-    <script src="js/controllers/productController.js"></script>
+            <div class="row">
+                <div class="info-1 col-md-4 text-center">
+                    <i class="fa fa-check-square-o fa-3x" aria-hidden="true"></i>
+                    <h4>Preencha os dados para fazer sua pesquisa.</h4>
+                </div>
+                <div class="info-2 col-md-4 text-center">
+                    <i class="fa fa-sticky-note-o fa-3x" aria-hidden="true"></i>
+                    <h4>Receba o melhor orçamento para seu bolso.</h4>
+                </div>
+                <div class="info-3 col-md-4 text-center">
+                    <i class="fa fa-birthday-cake fa-3x" aria-hidden="true"></i>
+                    <h4>Pronto! Agora pode ficar tranquilo(a) que nós cuidaremos de toda organização e entrega.</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato">
+
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 img-reponsive text-center">
+                    <a href="#">
+                        <img src="img/logo_hora_branca.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <span class="copyright">Copyright &copy; 2016 Hora da Diversão - Consultoria de festas</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="libs/jquery/dist/js/jquery.min.js"></script>
+    <script src="libs/bootstrap/dist/js/bootstrap.js"></script>
+
 
 </body>
-
 </html>
