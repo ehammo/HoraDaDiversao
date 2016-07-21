@@ -109,6 +109,27 @@ class User {
             });
         });
     }
+	
+	deleteUserRead(email) {
+        // TODO falta verificar se a senha bate
+        // TODO falta verificar se existe pedidos em andamento
+        // TODO falta apagar os pedidos e as crianças dependentes.
+        return new Promise(function(resolve, reject) {
+
+            UserTable.destroy({
+                where: {
+                    email: email
+                }
+            }).then(function(user) {
+                UserTable.findAll({}).then(function(users) {
+					resolve(users);
+				});
+            });
+        });
+
+    }
+
+	
     deleteUser(email) {
         // TODO falta verificar se a senha bate
         // TODO falta verificar se existe pedidos em andamento

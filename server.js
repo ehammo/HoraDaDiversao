@@ -13,7 +13,7 @@ var connection = new Sequelize(db.db, db.user, db.password, {
     host: db.host,
     dialect: 'postgres',
     dialectOptions: {
-        ssl: true
+        ssl: false
     }
 }); // connect to database
 
@@ -155,6 +155,16 @@ app.post("/user/delete", function(req, res) {
     });
 });
 
+app.post("/user/deleteRead", function(req, res) {
+    var email = req.body.email;
+
+    var ret = user.deleteUserRead(email);
+    ret.then(function(ret2) {
+        res.send(ret2)
+    }, function(err) {
+        res.send(err)
+    });
+});
 
 /*app.get("/user/read/:email", function(req,res){
 	var email = req.params.email;
@@ -175,11 +185,10 @@ app.get("/kid/", function(req, res) {
 
 app.post("/kid/create/", function(req, res) {
     var name = req.body.name;
-    var id = req.body.id;
     var gender = req.body.gender;
     var birth = req.body.birth;
-    var email = req.body.userEmail;
-    var ret = kid.createKid(name, id, gender, birth, email);
+    var email = req.body.UserEmail;
+    var ret = kid.createKid(name, gender, birth, email);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -199,12 +208,12 @@ app.get("/kid/read/", function(req, res) {
 });
 
 app.post("/kid/update/", function(req, res) {
-    var name = req.body.name;
-    var id = req.body.id;
+	var id = req.body.id;
+	var name = req.body.name;
     var gender = req.body.gender;
     var birth = req.body.birth;
-    var email = req.body.userEmail;
-    var ret = kid.updateKid(name, id, gender, birth, email);
+    var email = req.body.UserEmail;
+    var ret = kid.updateKid(name, id,gender, birth, email);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -221,6 +230,17 @@ app.post("/kid/delete", function(req, res) {
         res.send(err)
     });
 });
+
+app.post("/kid/deleteRead", function(req, res) {
+    var id = req.body.id;
+    var ret = kid.deleteKidRead(id);
+    ret.then(function(ret2) {
+        res.send(ret2)
+    }, function(err) {
+        res.send(err)
+    });
+});
+
 
 //orders
 /*
@@ -274,7 +294,6 @@ app.get("/product/", function(req, res) {
 
 app.post("/product/create/", function(req, res) {
     var name = req.body.name;
-    var id = req.body.id;
     var price = req.body.price;
     var photo = req.body.photo;
     var availability = req.body.availability;
@@ -282,7 +301,7 @@ app.post("/product/create/", function(req, res) {
     var category = req.body.category;
     var metric = req.body.metric;
     var supplierId = req.body.supplierId;
-    var ret = product.createProduct(name, id, price, photo, availability, description, category, supplierId, metric);
+    var ret = product.createProduct(name, price, photo, availability, description, category, supplierId, metric);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -303,15 +322,15 @@ app.get("/product/read/:id", function(req, res) {
 
 app.post("/product/update/", function(req, res) {
     var name = req.body.name;
-    var id = req.body.id;
     var price = req.body.price;
+	var id = req.body.id;
     var photo = req.body.photo;
     var availability = req.body.availability;
     var description = req.body.description;
     var category = req.body.category;
     var metric = req.body.metric;
     var supplierId = req.body.supplierId;
-    var ret = product.updateProduct(name, id, price, photo, availability, description, category, supplierId, metric);
+    var ret = product.updateProduct(name,id, price, photo, availability, description, category, supplierId, metric);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -329,6 +348,15 @@ app.post("/product/delete", function(req, res) {
     });
 });
 
+app.post("/product/deleteRead", function(req, res) {
+    var id = req.body.id;
+    var ret = product.deleteProductRead(id);
+    ret.then(function(ret2) {
+        res.send(ret2)
+    }, function(err) {
+        res.send(err)
+    });
+});
 
 //shopcart
 
@@ -342,13 +370,11 @@ app.get("/shopcart/", function(req, res) {
 });
 
 app.post("/shopcart/create/", function(req, res) {
-    var id = req.body.id;
     var date = req.body.date;
     var address = req.body.address;
     var status = req.body.status;
-    var products = JSON.parse(req.body.products);
     var email = req.body.email;
-    var ret = shopcart.createShopcart(id, date, address, status, products, email);
+    var ret = shopcart.createShopcart(date, address, status, email);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -377,15 +403,24 @@ app.post("/shopcart/delete", function(req, res) {
     });
 });
 
+app.post("/shopcart/deleteRead", function(req, res) {
+    var id = req.body.id;
+    var ret = shopcart.deleteShopcartRead(id);
+    ret.then(function(ret2) {
+        res.send(ret2)
+    }, function(err) {
+        res.send(err)
+    });
+});
+
 app.post("/shopcart/update/", function(req, res) {
     var id = req.body.id;
-    var date = req.body.date;
+	var date = req.body.date;
     var address = req.body.address;
     var status = req.body.status;
-    var products = JSON.parse(req.body.products);
     var email = req.body.email;
     console.log("email: " + email);
-    var ret = shopcart.updateShopcart(id, date, address, status, products, email);
+    var ret = shopcart.updateShopcart(id, date, address, status, email);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -439,15 +474,13 @@ app.get("/supplier/", function(req, res) {
 
 app.post("/supplier/create/", function(req, res) {
     var name = req.body.name;
-    var id = req.body.id;
     var password = req.body.password;
     var address = req.body.address;
     var phone = req.body.phone;
     var banner = req.body.banner;
     var description = req.body.description;
     var categories = ["id11", "id22", "id33"];
-    var products = ["Product 1", "Product 2", "Product 3", "Product 4"]
-    var ret = supplier.createSupplier(name, id, password, address, phone, banner, description, categories, products);
+    var ret = supplier.createSupplier(name, password, address, phone, banner, description, categories);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -475,8 +508,7 @@ app.post("/supplier/update/", function(req, res) {
     var banner = req.body.banner;
     var description = req.body.description;
     var categories = ["id11", "id22", "id33"];
-    var products = ["Product 1", "Product 2", "Product 3", "Product 4"]
-    var ret = supplier.updateSupplier(name, id, password, address, phone, banner, description, categories, products);
+    var ret = supplier.updateSupplier(name, id, password, address, phone, banner, description, categories);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -487,6 +519,16 @@ app.post("/supplier/update/", function(req, res) {
 app.post("/supplier/delete", function(req, res) {
     var id = req.body.id;
     var ret = supplier.deleteSupplier(id);
+    ret.then(function(ret2) {
+        res.send(ret2)
+    }, function(err) {
+        res.send(err)
+    });
+});
+
+app.post("/supplier/deleteRead", function(req, res) {
+    var id = req.body.id;
+    var ret = supplier.deleteSupplierRead(id);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {

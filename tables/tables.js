@@ -19,20 +19,12 @@ module.exports = function(connection) {
 
     var Kid = connection.define('Kid', {
         name: Sequelize.STRING,
-        id: {
-            type: Sequelize.STRING,
-            primaryKey: true
-        },
         gender: Sequelize.STRING,
         birth: Sequelize.STRING
     });
 
     var Product = connection.define('Product', {
         name: Sequelize.STRING,
-        id: {
-            type: Sequelize.STRING,
-            primaryKey: true
-        },
         price: Sequelize.STRING,
         photo: Sequelize.STRING, //photo adress on net
         availability: Sequelize.BOOLEAN,
@@ -42,10 +34,6 @@ module.exports = function(connection) {
     });
 
     var ShopCart = connection.define('ShopCart', {
-        id: {
-            type: Sequelize.STRING,
-            primaryKey: true
-        },
         date: Sequelize.STRING,
         address: Sequelize.STRING,
         status: Sequelize.STRING
@@ -64,10 +52,6 @@ module.exports = function(connection) {
 
     var Supplier = connection.define('Supplier', {
         name: Sequelize.STRING,
-        id: {
-            type: Sequelize.STRING,
-            primaryKey: true
-        },
         password: Sequelize.STRING,
         address: Sequelize.STRING,
         phone: Sequelize.STRING,

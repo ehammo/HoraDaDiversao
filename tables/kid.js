@@ -18,52 +18,37 @@ class Kid {
     constructor() {}
 
     //create
-    createKid(name, id, gender, birth, user) {
+    createKid(name,gender, birth, user) {
         return new Promise(function(resolve, reject) {
-            KidTable.find({
-                    where: {
-                        id: id
-                    }
-                })
-                .then(function(Kid) {
-                    if (Kid) {
-                        console.log("error! already has Kid with id " + id);
-                        reject("Erro! J� existe um Kid cadastrado com o id " + id);
-                    } else {
-                        UserTable.find({
-                            where: {
-                                email: user
-                            }
-                        }).then(function(user) {
-                            if (!user) {
-                                console.log("error! no user found with email " + user);
-                                reject("error! no user found");
-                            } else {
-                                KidTable.create({
-                                    name: name,
-                                    id: id,
-                                    gender: gender,
-                                    birth: birth,
-                                }).then((Kid2) => {
-                                    user.getKids().then((kids) => {
-                                        var resp = [];
-                                        var counter = 0;
-                                        for (counter; counter < kids.length; counter++) {
-                                            var values = kids[counter].id;
-                                            resp.push(values)
-                                        }
-                                        resp.push(Kid2.id);
-                                        user.setKids(resp);
-                                    });
-                                    console.log("created Kid: " + JSON.stringify(Kid2.dataValues));
-                                    resolve(Kid2);
-                                });
-                            }
-                        });
-
-                    }
-
-                });
+			UserTable.find({
+				where: {
+					email: user
+				}
+			}).then(function(user) {
+				if (!user) {
+					console.log("error! no user found with email " + user);
+					reject("error! no user found");
+				} else {
+					KidTable.create({
+						name: name,
+						gender: gender,
+						birth: birth,
+					}).then((Kid2) => {
+						user.getKids().then((kids) => {
+							var resp = [];
+							var counter = 0;
+							for (counter; counter < kids.length; counter++) {
+								var values = kids[counter].id;
+								resp.push(values)
+							}
+							resp.push(Kid2.id);
+							user.setKids(resp);
+						});
+						console.log("created Kid: " + JSON.stringify(Kid2.dataValues));
+						resolve(Kid2);
+					});
+				}
+			});
         });
     };
 
@@ -161,6 +146,25 @@ class Kid {
         });
     }
 
+	deleteKidRead(id) {
+        // TODO falta verificar se a senha bate
+        return new Promise(function(resolve, reject) {
+            KidTable.destroy({
+                where: {
+                    id: id
+                }
+            }).then(function(kid) {
+                if (kid > 0) {
+					KidTable.findAll({}).then(function(kids) {
+						resolve(kids);
+					});
+                } else {
+                    reject("No kids found")
+                }
+            });
+
+        });
+    }
 
 }
 

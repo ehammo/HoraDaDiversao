@@ -3,6 +3,7 @@ var Adapter;
 var ShopcartTable;
 var UserTable;
 var ProductTable;
+var resp;
 
 function setAdapter(adapter) {
     Adapter = adapter;
@@ -12,7 +13,8 @@ function setAdapter(adapter) {
 function setShopcart() {
     ShopcartTable = Adapter.ShopCart;
     UserTable = Adapter.User;
-    ProductTable = Adapter.Product;
+    ProductTable = Adapter.Product
+	resp = [];
 }
 
 class Shopcart {
@@ -20,56 +22,46 @@ class Shopcart {
     constructor() {}
 
     //create
-    createShopcart(id, date, address, status, products, email) {
+    createShopcart(date, address, status, email) {
         return new Promise(function(resolve, reject) {
-            ShopcartTable.find({
-                    where: {
-                        id: id
-                    }
-                })
-                .then(function(Shopcart) {
-                    if (Shopcart) {
-                        console.log("error! already has Shopcart with id " + id);
-                        reject("Erro! J� existe um Shopcart cadastrado com o id " + id);
-                    } else {
-                        UserTable.find({
-                            where: {
-                                email: email
-                            }
-                        }).then(function(user) {
-                            if (!user) {
-                                console.log("error! no user found");
-                                reject("err");
-                            } else {
-                                ShopcartTable.create({
-                                    id: id,
-                                    date: date,
-                                    address: address,
-                                    status: status,
-                                    UserEmail: email
-                                }).then((Shopcart2) => {
-                                    user.getHistory().then((shops) => {
-                                        var count = 0;
-                                        var resp = [];
-                                        for (count; count < shops.length; shops++) {
-                                            var v = shops[count].id;
-                                            resp.push(v);
-                                        }
-                                        resp.push(Shopcart2.id);
-                                        user.setHistory(resp);
-
-                                        Shopcart2.setProducts(products);
-                                        console.log("created Shopcart: " + JSON.stringify(Shopcart2.dataValues));
-                                        resolve(Shopcart2);
-                                    });
-
-                                });
-                            }
-                        });
-                    }
-                });
-        });
-    }
+            UserTable.find({
+				where: {
+					email: email
+				}
+			}).then(function(user) {
+				if (!user) {
+					console.log("error! no user found");
+					reject("err");
+				} else {
+					user.getHistory().then((shops)=>{
+						var counter = 0;
+                        resp = [];
+						for (counter; counter < shops.length; counter++) {
+                            var values = shops[counter].dataValues;
+                            if(values.status=="Aberto"){
+								reject("Error! There is a open shopcart in this user")
+							}
+							resp.push(shops[counter].id)
+                        }
+					}).then(()=>{
+						ShopcartTable.create({
+							date: date,
+							address: address,
+							status: status,
+							UserEmail: email
+						}).then((Shopcart2) => {
+							resp.push(Shopcart2.id);
+							user.setHistory(resp);
+							console.log("created Shopcart: " + JSON.stringify(Shopcart2.dataValues));
+							resolve(Shopcart2);
+						});
+					});
+				}
+			});
+			
+			
+		});
+	}
 
     readShopcart(id) { // get mesmo?
         return new Promise(function(resolve, reject) {
@@ -101,7 +93,7 @@ class Shopcart {
 
     };
 
-    updateShopcart(id, date, address, status, products, email) {
+    updateShopcart(id, date, address, status, email) {
         return new Promise(function(resolve, reject) {
             ShopcartTable.update({
                 id: id,
@@ -123,11 +115,9 @@ class Shopcart {
                         console.log("error! no user found");
                         reject("error! no user found");
                     } else {
-                        ShopcartTable.find({
-                            where: {
-                                id: id
-                            }
-                        }).then((Shopcart2) => {
+						if(Shopcart.status=="Fechado"){
+							reject("Error! Can't updade a closed shopcart")
+						}else{
                             user.getHistory().then((shops) => {
                                 var count = 0;
                                 var resp = [];
@@ -135,16 +125,14 @@ class Shopcart {
                                     var v = shops[count].id;
                                     resp.push(v);
                                 }
-                                resp.push(Shopcart2.id);
+                                resp.push(Shopcart.id);
                                 user.setHistory(resp);
-                                console.log(Shopcart2);
-                                Shopcart2.setProducts(products);
-                                resolve(Shopcart2);
+                                console.log(Shopcart);
+                                resolve(Shopcart);
                             });
-                        });
-                    }
+                        }
+					}
                 });
-                //			console.log('updated %d Shopcarts to: (%s,%s,%s)',Shopcart,id,status,orders);
             });
         });
     };
@@ -192,15 +180,12 @@ class Shopcart {
                     id: id
                 }
             }).then(function(shopcart) {
-                console.log("hey yo");
                 console.log(shopcart);
                 if (!shopcart) {
                     console.log("error! no shopcart found");
                     reject("error! no shopcart found");
                 } else {
-                    console.log("yay?");
                     resolve(shopcart.getProducts());
-                    console.log("maorreu?");
                 }
 
             });
@@ -222,6 +207,22 @@ class Shopcart {
         });
     }
 
+	deleteShopcartRead(id) {
+        // TODO falta verificar se a senha bate
+        return new Promise(function(resolve, reject) {
+
+            ShopcartTable.destroy({
+                where: {
+                    id: id
+                }
+            }).then(function(Shopcart) {
+                ShopcartTable.findAll({}).then(function(shopcarts) {
+					resolve(shopcarts);
+				});
+            });
+        });
+    }
+	
 }
 
 
