@@ -45,7 +45,6 @@ module.exports = function(connection) {
             type: Sequelize.STRING,
             primaryKey: true
         },
-  		qtd: Sequelize.ARRAY(Sequelize.INTEGER),
   		date: Sequelize.STRING,
   		address: Sequelize.STRING,
   		status: Sequelize.STRING
@@ -76,10 +75,15 @@ module.exports = function(connection) {
 		categories: Sequelize.ARRAY(Sequelize.STRING)
     });
 
+	var ShopCartProduct = connection.define('ShopCartProduct', {
+		qtd: Sequelize.INTEGER
+	});
+	
 	//cardinalidades
 	User.hasMany(Kid, {as: 'Kids'})
 	User.hasMany(ShopCart, {as: 'History'})
-	ShopCart.hasMany(Product, {as: 'Products'})
+	ShopCart.belongsToMany(Product, {through: 'ShopCartProduct', foreignKey: 'ShopCartId'});
+	Product.belongsToMany(ShopCart, {through: 'ShopCartProduct', foreignKey: 'ProductId'});
 	//	ShopCart.hasMany(Order, {as: 'Orders'})
 	//Order.belongsTo(User, {as: 'User'})
 	//Order.belongsTo(Supplier, {as: 'Supplier'})

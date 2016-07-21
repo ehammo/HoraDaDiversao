@@ -2,6 +2,7 @@
 var Adapter;
 var ShopcartTable;
 var UserTable;
+var ProductTable;
 
 function setAdapter(adapter) {
 	Adapter = adapter;
@@ -11,6 +12,7 @@ function setAdapter(adapter) {
 function setShopcart() {
 	ShopcartTable = Adapter.ShopCart;
 	UserTable = Adapter.User;
+	ProductTable = Adapter.Product;
 }
 
 class Shopcart{
@@ -18,7 +20,7 @@ class Shopcart{
 	constructor(){}
 
 	//create
-	createShopcart(id,qtd,date,address,status,products,email){
+	createShopcart(id,date,address,status,products,email){
 			return new Promise(function (resolve,reject){
 				ShopcartTable.find({
 					where: {id : id}
@@ -37,7 +39,6 @@ class Shopcart{
 							}else{
 								ShopcartTable.create({
 									id: id,
-									qtd: qtd,
 									date: date,
 									address: address,
 									status: status,
@@ -95,11 +96,10 @@ class Shopcart{
 
 	};
 
-	updateShopcart(id,qtd,date,address,status,products,email){
+	updateShopcart(id,date,address,status,products,email){
 		return new Promise(function (resolve,reject){
 			ShopcartTable.update({
 				id: id,
-				qtd: qtd,
 				date: date,
 				address: address,
 				status: status,
@@ -111,7 +111,7 @@ class Shopcart{
 				}).then(function(user){
 					if(!user){
 						console.log("error! no user found");
-						reject ("err");
+						reject ("error! no user found");
 					}else{
 						ShopcartTable.find({
 							where: {id:id}
@@ -137,6 +137,35 @@ class Shopcart{
 		});
 	};
 
+	addProduct(idP, idS, qtd){
+		return new Promise(function (resolve, reject){
+			ShopcartTable.find({
+				where: {id: idS}
+			}).then(function (shopcart){
+				console.log(shopcart);
+				if(!shopcart){
+					console.log("error! no shopcart found");
+					reject("error! no shopcart found");
+				}else{
+					ProductTable.find({
+						where: {id: idP}
+					}).then(function (product){
+						if(!product){
+							console.log("error! no product found");
+							reject("error! no product found");
+						}else{
+							console.log(qtd);
+							shopcart.addProduct(product, {qtd: qtd });	
+							resolve("cheguei");
+						}
+						
+					})
+				}
+			});
+			
+		});
+	}
+	
 	deleteShopcart(id){
   	// TODO falta verificar se a senha bate
 		return new Promise(function (resolve,reject){
