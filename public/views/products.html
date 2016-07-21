@@ -1,0 +1,78 @@
+<div class="panel panel-info">
+  <div class="panel-heading">Lista de Produtos</div>
+  <div class="panel-body">
+      <table class="table table-hover">
+          <thead>
+              <tr>
+                  <th>
+                      #
+                  </th>
+                  <th ng-click="orderValue = 'name'">
+                      Nome
+                  </th>
+                  <th ng-click="orderValue = 'type'">
+                      Tipo
+                  </th>
+                  <th ng-click="orderValue = 'desciption'">
+                      Descrição
+                  </th>
+                  <th ng-click="orderValue = 'price'">
+                      Preço
+                  </th>
+                  <th ng-click="orderValue = 'metric'">
+                      Métrica
+                  </th>
+                  <th>
+
+                  </th>
+              </tr>
+          </thead>
+          <tbody ng-repeat="product in PLC.products | filter : { name: searchText } | orderBy : orderValue " ng-click="order.details = !order.details ">
+              <tr>
+                  <td>
+                      <strong>{{$index + 1}}</strong>
+                  </td>
+                  <td>
+                      {{product.name}}
+                  </td>
+                  <td>
+                      {{product.category}}
+                  </td>
+                  <td>
+                      {{product.description}}
+                  </td>
+                  <td>
+                      {{product.price | currency : 'R$ ' : 2}}
+                  </td>
+                  <td>
+                      {{product.metric}}
+                  </td>
+                  <td>
+                      <a ng-click="PLC.deleteProduct(product)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                  </td>
+              </tr>
+              <tr>
+                  <td ng-show="order.details" colspan="7">
+                      <p>
+                          Detalhes
+                      </p>
+                      <p>
+                          Lista de produtos e quantidades
+                      </p>
+                      <p>
+                          Hora de entrega
+                      </p>
+                      <p>
+                          Referência para o endereço
+                      </p>
+                      <p>
+                          Feedback
+                      </p>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      <a ng-href="#editProduct"><button type="button" class="btn btn-primary btn-lg btn-block">
+          Adicionar Produto</button></a>
+  </div>
+</div>
