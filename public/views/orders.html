@@ -1,0 +1,64 @@
+<div class="panel panel-info">
+  <div class="panel-heading">Lista de Pedidos</div>
+  <div class="panel-body">
+      <table class="table table-hover">
+          <thead>
+              <tr>
+                  <th>
+                      #
+                  </th>
+                  <th ng-click="orderValue = 'name'">
+                      Nome do Cliente
+                  </th>
+                  <th ng-click="orderValue = 'date'">
+                      Data
+                  </th>
+                  <th ng-click="orderValue = 'address'">
+                      Endereço de Entrega
+                  </th>
+                  <th ng-click="orderValue = 'address'">
+                      Status
+                  </th>
+              </tr>
+          </thead>
+          <tbody ng-repeat="order in OLC.orders | filter : { name: searchText, status: statusFilter } | orderBy : orderValue " ng-click="order.details = !order.details ">
+              <tr>
+                  <td>
+                      <strong>{{$index + 1}}</strong>
+                  </td>
+                  <td>
+                      {{order.name}}
+                  </td>
+                  <td>
+                      {{order.date | date: 'dd-MM-yyyy' }}
+                  </td>
+                  <td>
+                      {{order.address}}
+                  </td>
+                  <td>
+                      {{order.status}}
+                  </td>
+              </tr>
+              <tr>
+                  <td ng-show="order.details" colspan="6">
+                      <p>
+                          Detalhes
+                      </p>
+                      <p>
+                          Lista de produtos e quantidades
+                      </p>
+                      <p>
+                          Hora de entrega
+                      </p>
+                      <p>
+                          Referência para o endereço
+                      </p>
+                      <p>
+                          Feedback
+                      </p>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>

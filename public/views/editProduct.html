@@ -1,0 +1,25 @@
+<div class="panel panel-info">
+  <div class="panel-heading">Cadastro de Produto</div>
+  <div class="panel-body">
+      <form name="productForm" novalidate>
+          <div class="form-group">
+              <input type="text" class="form-control" ng-model="PC.product.name" placeholder="Nome">
+          </div>
+          <div class="form-group">
+              <input type="text" class="form-control" ng-model="PC.product.category" placeholder="Categoria">
+          </div>
+          <div class="form-group">
+              <input type="text" class="form-control" ng-model="PC.product.description" placeholder="Descrição">
+          </div>
+          <div class="form-group">
+              <input type="text" class="form-control" ng-model="PC.product.price" placeholder="Preço">
+          </div>
+          <div class="form-group">
+              <input type="text" class="form-control" ng-model="PC.product.metric" placeholder="Métrica">
+          </div>
+          <div class="form-group">
+             <button type="submit" class="btn btn-primary btn-lg" ng-click="PC.createProduct()">Add</button>
+          </div>
+      </form>
+  </div>
+</div>
