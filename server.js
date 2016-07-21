@@ -151,7 +151,7 @@ app.get("/genf", function(req, res) {
     connection.sync({
         force: true
     }).then(function(a) {
-        ret = supplier.createSupplier(supplier);
+        ret = supplier.createSupplier(tamarindus);
         ret.then(function(data) {
             prod1.supplierId = prod2.supplierId = prod3.supplierId = prod4.supplierId = prod5.supplierId = data.id;
             product.createProduct(prod1);
@@ -466,7 +466,7 @@ app.get("/shopcart/", function(req, res) {
 });
 
 app.post("/shopcart/create/", function(req, res) {
-    var ret = shopcart.createShopcart(req.body);
+      var ret = shopcart.createShopcart(req.body);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -555,8 +555,19 @@ app.post("/shopcart/getProducts/", function(req, res) {
 
 //supplier
 
-app.get("/supplier/", function(req, res) {
+app.get("/supplier", function(req, res) {
     var ret = supplier.readSuppliers();
+    ret.then(function(ret2) {
+        res.send(ret2)
+    }, function(err) {
+        res.send(err)
+    });
+});
+
+app.get("/supplier/:category", function(req, res) {
+    var category = req.params.category;
+    console.log("category: " + category);
+    var ret = supplier.readSuppliersByCategory(category);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {

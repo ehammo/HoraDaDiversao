@@ -25,6 +25,7 @@ class Supplier {
         var description = supplier.description;
         var categories = supplier.categories;
         var products = supplier.products;
+        console.log("   ---Categories: " + categories);
 
         return new Promise(function(resolve, reject) {
             SupplierTable.findAll({
@@ -76,9 +77,24 @@ class Supplier {
         });
     };
 
-    readSuppliers() { // get mesmo?
+    readSuppliers() {
+
         return new Promise(function(resolve, reject) {
             SupplierTable.findAll({}).then(function(suppliers) {
+                resolve(suppliers);
+            });
+        });
+    };
+
+    readSuppliersByCategory(category) {
+        return new Promise(function(resolve, reject) {
+            SupplierTable.findAll({
+                where: {
+                    categories: {
+                        $contains: [category]
+                    }
+                }
+            }).then(function(suppliers) {
                 resolve(suppliers);
             });
         });
