@@ -50,11 +50,38 @@ connection
     console.log('Unable to connect to the database:', err);
   });
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 //routes
 app.get("/",function(req,res){
     res.send("<h1>Hello from HoraDiversao WebServer</h1>");
 		console.log('index');
 });
+
+app.get("/resetdb",function(req,res){ // bugado
+  connection.sync({ force: true });
+  res.send("resetou!");
+  console.log("resetou!");
+
+    // connection.query('SET FOREIGN_KEY_CHECKS = 0') // necessario por causa da tabela ElderUser
+    // .then(function(){
+    //   return connection.sync({ force: true });
+    // })
+    // .then(function(){
+    //   return connection.query('SET FOREIGN_KEY_CHECKS = 1')
+    // })
+    // .then(function(){
+    //   console.log('Database synchronised.');
+    //   res.send('Database synchronised.');
+    // }, function(err){
+    //   console.log(err);
+    //   res.send(err);
+    // });
+  });
 
 
 //User
