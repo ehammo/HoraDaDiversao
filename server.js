@@ -241,9 +241,8 @@ app.post("/user/create/", function(req, res) {
     });
 });
 
-app.get("/user/read/", function(req, res) {
+app.get("/user/read/:email", function(req, res) {
     var email = req.params.email;
-    console.log("email: " + email);
     var ret = user.readUser(email);
     ret.then(function(ret2) {
         res.send(ret2)
@@ -318,7 +317,7 @@ app.post("/kid/create/", function(req, res) {
     });
 });
 
-app.get("/kid/read/", function(req, res) {
+app.get("/kid/read/:id", function(req, res) {
     var id = req.params.id;
     console.log("id: " + id);
     var ret = kid.readKid(id);
@@ -492,9 +491,8 @@ app.post("/shopcart/create/", function(req, res) {
     });
 });
 
-app.get("/shopcart/read/", function(req, res) {
+app.get("/shopcart/read/:id", function(req, res) {
     var id = req.params.id;
-    console.log("id: " + id);
     var ret = shopcart.readShopcart(id);
     ret.then(function(ret2) {
         res.send(ret2)
@@ -602,9 +600,8 @@ app.post("/supplier/create/", function(req, res) {
     });
 });
 
-app.get("/supplier/read/", function(req, res) {
+app.get("/supplier/read/:id", function(req, res) {
     var id = req.params.id;
-    console.log("id: " + id);
     var ret = supplier.readSupplier(id);
     ret.then(function(ret2) {
         res.send(ret2)
