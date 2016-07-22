@@ -95,6 +95,18 @@ class Product {
         });
     };
 
+    readProductsBySupplier(id) {
+        return new Promise(function(resolve, reject) {
+            ProductTable.findAll({
+              where : {
+                SupplierId : id
+              }
+            }).then(function(products) {
+                resolve(products);
+            });
+        });
+    };
+
     updateProduct(name, id, price, photo, availability, description, category, supplierId, metric) {
 	   return new Promise(function(resolve, reject) {
             SupplierTable.find({
