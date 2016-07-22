@@ -39,4 +39,4 @@ function NavController () {
 
 }
 
-app.controller('NavController', NavController);
+appSupplier.controller('NavController', NavController);

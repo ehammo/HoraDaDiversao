@@ -17,7 +17,7 @@
     <link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body ng-app="HoraDiversaoSupplier">
+<body ng-app="HoraDiversaoUser">
 
     <nav class="navbar navbar-default navbar-static-top" role="navigation" ng-controller="NavController as nav">
       <div class="container-fluid">
@@ -36,10 +36,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
           <ul class="nav navbar-nav">
             <li class="{{nav.generalClass}}"><a ng-href="#/" ng-click="nav.changeClassHome()">Geral</a></li>
-            <li class="{{nav.ordersClass}}"><a ng-href="#orders"
-                ng-click="nav.changeClassOrder()">Pedidos</a></li>
-            <li class="{{nav.productsClass}}"><a ng-href="#products"
-                ng-click="nav.changeClassProduct()">Produtos</a></li>
+            <li class="{{nav.partyClass}}"><a ng-href="#party"
+                ng-click="nav.changeClassParty()">Organizar Festa</a></li>
+            <li class="{{nav.suppliersClass}}"><a ng-href="#products"
+                ng-click="nav.changeClassSupplier()">Fornecedores</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="{{nav.accountClass}}"><a>Conta</a></li>
@@ -61,12 +61,11 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <script src="js/appSupplier.js"></script>
-    <script src="js/controllers/supplier/homeController.js"></script>
-    <script src="js/controllers/supplier/navController.js"></script>
-    <script src="js/controllers/supplier/orderListController.js"></script>
-    <script src="js/controllers/supplier/productListController.js"></script>
-    <script src="js/controllers/supplier/productController.js"></script>
+    <script src="js/appUser.js"></script>
+    <script src="js/controllers/user/homeController.js"></script>
+    <script src="js/controllers/user/navController.js"></script>
+    <script src="js/controllers/user/partyController.js"></script>
+    <script src="js/controllers/user/cartController.js"></script>
 
 </body>
 

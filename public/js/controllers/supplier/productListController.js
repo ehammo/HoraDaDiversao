@@ -11,8 +11,9 @@ function ProductListController ($http) {
     });
 
     vm.deleteProduct = function(product){
-        $http.post('/product/delete/', product)
+        $http.post('/product/deleteRead/', product)
             .success(function(data) {
+                vm.products = data;
                 console.log(data);
             })
             .error(function(data) {
@@ -22,4 +23,4 @@ function ProductListController ($http) {
 
 }
 
-app.controller('ProductListController', ProductListController);
+appSupplier.controller('ProductListController', ProductListController);

@@ -3,4 +3,4 @@ function HomeController () {
     vm.hello = 'Hello World!';
 }
 
-app.controller('HomeController', HomeController);
+appSupplier.controller('HomeController', HomeController);

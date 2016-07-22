@@ -1,24 +1,24 @@
-var app = angular.module('HoraDiversao', ['ngRoute']);
+var appSupplier = angular.module('HoraDiversaoSupplier', ['ngRoute']);
 
 function router($routeProvider){
     $routeProvider
     .when('/', {
-        templateUrl: 'views/home.html',
+        templateUrl: 'views/supplier/home.html',
         controller: 'HomeController',
         controllerAs: 'HC'
     })
     .when('/orders', {
-        templateUrl: 'views/orders.html',
+        templateUrl: 'views/supplier/orders.html',
         controller: 'OrderListController',
         controllerAs: 'OLC'
     })
     .when('/products', {
-        templateUrl: 'views/products.html',
+        templateUrl: 'views/supplier/products.html',
         controller: 'ProductListController',
         controllerAs: 'PLC'
     })
     .when('/editProduct', {
-        templateUrl: 'views/editProduct.html',
+        templateUrl: 'views/supplier/editProduct.html',
         controller: 'ProductController',
         controllerAs: 'PC'
     })
@@ -27,4 +27,4 @@ function router($routeProvider){
     })
 }
 
-app.config(router);
+appSupplier.config(router);

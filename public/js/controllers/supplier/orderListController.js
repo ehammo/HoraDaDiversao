@@ -9,4 +9,4 @@ function OrderListController () {
     ];
 }
 
-app.controller('OrderListController', OrderListController);
+appSupplier.controller('OrderListController', OrderListController);

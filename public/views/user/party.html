@@ -1,0 +1,22 @@
+<div class="panel panel-info">
+  <div class="panel-heading">Informações da Festa</div>
+  <div class="panel-body">
+      <form name="partyForm" novalidate>
+          <div class="form-group">
+              <input type="text" class="form-control" ng-model="PC.formData.name" placeholder="Nome">
+          </div>
+          <div class="form-group">
+              <input type="text" class="form-control" ng-model="PC.product.price" placeholder="Quantidade de Adultos">
+          </div>
+          <div class="form-group">
+              <input type="text" class="form-control" ng-model="PC.product.price" placeholder="Quantidade de Crianças">
+          </div>
+          <div class="form-group text-center">
+             <!-- <a ng-href="#cart"> -->
+                 <button type="submit" class="btn btn-primary btn-lg" ng-click="PC.createCart()">Continuar</button>
+             <!-- </a> -->
+          </div>
+      </form>
+      <h1> {{PC.cart.id}} </h1>
+  </div>
+</div>
