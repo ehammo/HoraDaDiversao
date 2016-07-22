@@ -13,7 +13,7 @@ function router($routeProvider){
         controllerAs: 'OLC'
     })
     .when('/products', {
-        templateUrl: 'views/supplier/products.html',
+        templateUrl: 'views/supplier/productList.html',
         controller: 'ProductListController',
         controllerAs: 'PLC'
     })

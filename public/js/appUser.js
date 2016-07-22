@@ -17,6 +17,16 @@ function router($routeProvider){
         controller: 'CartController',
         controllerAs: 'CC'
     })
+    .when('/suppliers', {
+        templateUrl: 'views/user/supplierList.html',
+        controller: 'SupplierListController',
+        controllerAs: 'SLC'
+    })
+    .when('/suppliers/:id', {
+        templateUrl: 'views/user/supplier.html',
+        controller: 'SupplierController',
+        controllerAs: 'SC'
+    })
     .otherwise({
         redirectTo: '/'
     })
