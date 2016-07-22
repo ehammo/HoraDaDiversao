@@ -165,7 +165,7 @@ app.get("/genf", function(req, res) {
         });
 
         ret2 = supplier.createSupplier(delidoces);
-        ret.then(function(data) {
+        ret2.then(function(data) {
             var prod1b = prod1;
             var prod2b = prod2;
             var prod3b = prod3;
@@ -406,6 +406,16 @@ app.post("/order/update/",function(req,res){
 
 app.get("/product/", function(req, res) {
     var ret = product.readProducts();
+    ret.then(function(ret2) {
+        res.send(ret2)
+    }, function(err) {
+        res.send(err)
+    });
+});
+
+app.get("/product/supplier/:id", function(req, res) {
+    var id = req.params.id;
+    var ret = product.readProductsBySupplier(id);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
