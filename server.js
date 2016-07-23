@@ -159,7 +159,6 @@ app.get("/genf", function(req, res) {
             product.createProduct(prod3);
             product.createProduct(prod4);
             product.createProduct(prod5);
-			connection.sync();
             res.send("doing");
         }, function(err) {
             res.send(err);
@@ -178,7 +177,6 @@ app.get("/genf", function(req, res) {
             product.createProduct(prod3b);
             product.createProduct(prod4b);
             product.createProduct(prod5b);
-			connection.sync();
             res.send("doing");
         }, function(err) {
             res.send(err);
@@ -215,7 +213,6 @@ app.get("/genu", function(req, res) {
             shopcart.addProduct(2, 1, 2);
             shopcart.addProduct(3, 1, 2);
             shopcart.addProduct(4, 1, 1);
-			connection.sync();
             res.send("doing");
         }, function(err) {
             res.send(err);
