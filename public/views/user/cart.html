@@ -19,13 +19,10 @@
                   <th>
                       Preço
                   </th>
-                  <th>
-
-                  </th>
               </tr>
           </thead>
-          <tbody ng-repeat="product in CC.products">
-              <tr>
+          <tbody>
+              <tr ng-repeat="product in CC.products">
                   <td>
                       <strong>{{$index + 1}}</strong>
                   </td>
@@ -33,23 +30,32 @@
                       {{product.name}}
                   </td>
                   <td>
-                      <!-- {{product}} -->
+                      {{product.SupplierId}}
+                      <!-- {{CC.suppliers[product.SupplierId]}} -->
                   </td>
                   <td>
-                      <!-- {{product.address}} -->
+                      {{product.ShopCartProduct.qtd}}
                   </td>
                   <td>
-                      {{product.price | currency : 'R$ ' : 2}}
+                      {{product.price * product.ShopCartProduct.qtd | currency : 'R$ ' : 2}}
                   </td>
+              </tr>
+              <tr>
                   <td>
 
+                  </td>
+                  <td colspan="3">
+                      <strong>Preço Total</strong>
+                  </td>
+                  <td>
+                      {{CC.priceSum | currency : 'R$ ' : 2}}
                   </td>
               </tr>
           </tbody>
       </table>
       <div class="text-center">
           <button type="button" class="btn btn-primary btn-lg" ng-click="CC.addProduct()">Adicionar Produto</button>
-          <button type="button" class="btn btn-primary btn-lg">Finaizar Compra</button>
+          <button type="button" class="btn btn-primary btn-lg">Finalizar Compra</button>
       </div>
   </div>
 </div>
