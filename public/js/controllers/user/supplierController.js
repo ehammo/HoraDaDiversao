@@ -10,6 +10,14 @@ function SupplierController ($http, $routeParams) {
         console.log('Error: ' + data);
     });
 
+    $http.get('/product/supplier/' + $routeParams.id)
+    .success(function (data) {
+        vm.products = data;
+        console.log(data);
+    })
+    .error(function (data) {
+        console.log('Error: ' + data);
+    });
 
 
 }

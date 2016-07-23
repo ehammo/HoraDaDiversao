@@ -27,6 +27,21 @@ function router($routeProvider){
         controller: 'SupplierController',
         controllerAs: 'SC'
     })
+    .when('/cart/:id/suppliers', {
+        templateUrl: 'views/user/supplierListCart.html',
+        controller: 'SupplierListCartController',
+        controllerAs: 'SLCC'
+    })
+    .when('/cart/:id/suppliers/:spid', {
+        templateUrl: 'views/user/supplierCart.html',
+        controller: 'SupplierCartController',
+        controllerAs: 'SCC'
+    })
+    .when('/carts', {
+        templateUrl: 'views/user/cartList.html',
+        controller: 'CartListController',
+        controllerAs: 'CLC'
+    })
     .otherwise({
         redirectTo: '/'
     })

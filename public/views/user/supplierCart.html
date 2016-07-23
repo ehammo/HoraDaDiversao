@@ -1,5 +1,5 @@
 <div class="panel panel-info">
-  <div class="panel-heading">{{SC.supplier.name}} : Lista de Produtos</div>
+  <div class="panel-heading">{{SCC.supplier.name}} : Lista de Produtos</div>
   <div class="panel-body">
       <table class="table table-hover">
           <thead>
@@ -22,9 +22,15 @@
                   <th>
                       Métrica
                   </th>
+                  <th>
+                      Quantidade
+                  </th>
+                  <th>
+
+                  </th>
               </tr>
           </thead>
-          <tbody ng-repeat="product in SC.products" ng-click="order.details = !order.details ">
+          <tbody ng-repeat="product in SCC.products">
               <tr>
                   <td>
                       <strong>{{$index + 1}}</strong>
@@ -44,27 +50,18 @@
                   <td>
                       {{product.metric}}
                   </td>
-              </tr>
-              <tr>
-                  <td ng-show="order.details" colspan="6">
-                      <p>
-                          Detalhes
-                      </p>
-                      <p>
-                          Lista de produtos e quantidades
-                      </p>
-                      <p>
-                          Hora de entrega
-                      </p>
-                      <p>
-                          Referência para o endereço
-                      </p>
-                      <p>
-                          Feedback
-                      </p>
+                  <td>
+                      <input type="number" class="form-control" ng-model="SCC.products[$index].quantity">
+                  </td>
+                  <td>
+                      <button type="button" class="btn btn-primary btn-sm" ng-click="SCC.addProduct(product)">Adicionar</button>
                   </td>
               </tr>
           </tbody>
       </table>
+      <div ng-show="SCC.sucess" class="alert alert-success" role="alert">Produto adicionado com sucesso ao carrinho</div>
+      <div class="text-center">
+          <button type="button" class="btn btn-primary btn-lg" ng-click="SCC.return()">Voltar para o Carrinho</button>
+      </div>
   </div>
 </div>

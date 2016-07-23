@@ -24,26 +24,32 @@
                   </th>
               </tr>
           </thead>
-          <!-- <tbody ng-repeat="order in OLC.orders">
+          <tbody ng-repeat="product in CC.products">
               <tr>
                   <td>
                       <strong>{{$index + 1}}</strong>
                   </td>
                   <td>
-                      {{order.name}}
+                      {{product.name}}
                   </td>
                   <td>
-                      {{order.date | date: 'dd-MM-yyyy' }}
+                      <!-- {{product}} -->
                   </td>
                   <td>
-                      {{order.address}}
+                      <!-- {{product.address}} -->
                   </td>
                   <td>
-                      {{order.status}}
+                      {{product.price | currency : 'R$ ' : 2}}
+                  </td>
+                  <td>
+
                   </td>
               </tr>
-          </tbody> -->
+          </tbody>
       </table>
-      <h1> {{CC.cart}} </h1>
+      <div class="text-center">
+          <button type="button" class="btn btn-primary btn-lg" ng-click="CC.addProduct()">Adicionar Produto</button>
+          <button type="button" class="btn btn-primary btn-lg">Finaizar Compra</button>
+      </div>
   </div>
 </div>

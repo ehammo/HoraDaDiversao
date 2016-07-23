@@ -1,0 +1,39 @@
+<div class="panel panel-info">
+  <div class="panel-heading">Lista de Carrinhos</div>
+  <div class="panel-body">
+      <table class="table table-hover">
+          <thead>
+              <tr>
+                  <th>
+                      #
+                  </th>
+                  <th>
+                      Data
+                  </th>
+                  <th>
+                      Status
+                  </th>
+                  <th>
+
+                  </th>
+              </tr>
+          </thead>
+          <tbody ng-repeat="cart in CLC.cartList">
+              <tr ng-click="CLC.cartDetails(cart)">
+                  <td>
+                      <strong>{{$index + 1}}</strong>
+                  </td>
+                  <td>
+                      {{cart.createdAt | date : 'dd-MM-yyyy'}}
+                  </td>
+                  <td>
+                      {{cart.status }}
+                  </td>
+                  <td>
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true" ng-click="CLC.cartDetails(cart)"></span>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>
