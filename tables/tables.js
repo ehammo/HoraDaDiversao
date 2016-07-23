@@ -95,7 +95,8 @@ module.exports = function(connection) {
         Kid,
         Product,
         ShopCart,
-        Supplier
+        Supplier,
+		ShopCartProduct
     };
     return tables;
 }

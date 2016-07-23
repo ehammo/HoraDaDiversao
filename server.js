@@ -159,6 +159,7 @@ app.get("/genf", function(req, res) {
             product.createProduct(prod3);
             product.createProduct(prod4);
             product.createProduct(prod5);
+			connection.sync();
             res.send("doing");
         }, function(err) {
             res.send(err);
@@ -177,6 +178,7 @@ app.get("/genf", function(req, res) {
             product.createProduct(prod3b);
             product.createProduct(prod4b);
             product.createProduct(prod5b);
+			connection.sync();
             res.send("doing");
         }, function(err) {
             res.send(err);
@@ -213,6 +215,7 @@ app.get("/genu", function(req, res) {
             shopcart.addProduct(2, 1, 2);
             shopcart.addProduct(3, 1, 2);
             shopcart.addProduct(4, 1, 1);
+			connection.sync();
             res.send("doing");
         }, function(err) {
             res.send(err);
@@ -280,6 +283,17 @@ app.post("/user/deleteRead", function(req, res) {
     var email = req.body.email;
 
     var ret = user.deleteUserRead(email);
+    ret.then(function(ret2) {
+        res.send(ret2)
+    }, function(err) {
+        res.send(err)
+    });
+});
+
+app.post("/user/check", function(req, res) {
+    var email = req.body.email;
+	var pass = req.body.password;
+    var ret = user.check(email,pass);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
@@ -553,6 +567,7 @@ app.post("/shopcart/addProduct", function(req, res) {
     var qtd = req.body.qtd;
     console.log(qtd);
     var ret = shopcart.addProduct(productId, shopcartId, qtd);
+	connection.sync();
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {

@@ -152,6 +152,25 @@ class User {
         });
 
     }
+	
+	check(email,senha){
+		return new Promise(function (resolve,reject){
+			UserTable.find({
+				where: {email:email}
+			}).then(function(user){
+				if(!user){
+					reject("No user found")
+				}else{
+					if(user.password==senha){
+						resolve("OK");
+					}else{
+						reject("Wrong password")
+					}
+				
+				}
+			});
+		});
+	}
 
 
 }

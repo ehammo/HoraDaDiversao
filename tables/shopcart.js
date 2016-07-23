@@ -3,6 +3,8 @@ var Adapter;
 var ShopcartTable;
 var UserTable;
 var ProductTable;
+var SupplierTable;
+var ShopCartProductTable;
 var resp;
 
 function setAdapter(adapter) {
@@ -13,7 +15,9 @@ function setAdapter(adapter) {
 function setShopcart() {
     ShopcartTable = Adapter.ShopCart;
     UserTable = Adapter.User;
-    ProductTable = Adapter.Product
+    ProductTable = Adapter.Product;
+	SupplierTable = Adapter.Supplier;
+	ShopCartProductTable = Adapter.ShopCartProduct;
     resp = [];
 }
 
@@ -177,19 +181,47 @@ class Shopcart {
     }
 
     getProducts(id) {
-        console.log("promise");
+		var suppliers={};
+		var resp=[];
         return new Promise(function(resolve, reject) {
             ShopcartTable.find({
                 where: {
                     id: id
                 }
             }).then(function(shopcart) {
-                console.log(shopcart);
                 if (!shopcart) {
                     console.log("error! no shopcart found");
                     reject("error! no shopcart found");
                 } else {
-                    resolve(shopcart.getProducts());
+					shopcart.getProducts().then(function(products){
+						SupplierTable.findAll({}).then(function(sups){
+							var i = 0;
+							for(i;i<sups.length;i++){
+								suppliers[sups[i].id] = sups[i].name; 
+							}
+							resp.push(products);
+							resp.push(suppliers);
+							resolve(resp);
+						})
+						
+					});
+					
+					/*
+					var count = 0;
+					for(count;count<products.length;count++){
+						console.log(count);
+						console.log(product[count]);
+						SupplierTable.find({
+							where: {id:products[count].supplierId}
+						}).then(function(supplierX){
+							console.log(supplierX);
+							suppliers.push(supplierX)
+							
+						});
+					}*/
+					
+					
+                    
                 }
 
             });
