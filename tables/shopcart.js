@@ -199,9 +199,11 @@ class Shopcart {
 							for(i;i<sups.length;i++){
 								suppliers[sups[i].id] = sups[i].name; 
 							}
-							resp.push(products);
-							resp.push(suppliers);
-							resolve(resp);
+							i=0;
+							for(i;i<products.length;i++){
+								products[i]["SupplierId"] = suppliers[products[i].SupplierId+""];
+							}							
+							resolve(products);
 						})
 						
 					});
