@@ -2,7 +2,7 @@ function PartyController ($http, $location) {
     var vm = this;
 
     vm.dataCart = {};
-    vm.dataCart.email = "email";
+    vm.dataCart.email = "joao@gmail.com";
 
     vm.createCart = function(){
         $http.post('/shopcart/create/', vm.dataCart)
