@@ -3,7 +3,7 @@ var app = express.Router();
 var Sequelize = require('sequelize');
 
 module.exports = function(product){
-	
+
 app.get("/", function(req, res) {
     var ret = product.readProducts();
     ret.then(function(ret2) {
@@ -13,8 +13,8 @@ app.get("/", function(req, res) {
     });
 });
 
-app.get("/supplier/:id", function(req, res) {
-    var id = req.params.id;
+app.get("/supplier/", function(req, res) {
+    var id = req.query.id;
     var ret = product.readProductsBySupplier(id);
     ret.then(function(ret2) {
         res.send(ret2)
@@ -32,8 +32,8 @@ app.post("/create/", function(req, res) {
     });
 });
 
-app.get("/read/:id", function(req, res) {
-    var id = req.params.id;
+app.get("/read/", function(req, res) {
+    var id = req.query.id;
     console.log("id: " + id);
     var ret = product.readProduct(id);
     ret.then(function(ret2) {

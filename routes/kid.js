@@ -26,8 +26,8 @@ app.post("/create/", function(req, res) {
     });
 });
 
-app.get("/read/:id", function(req, res) {
-    var id = req.params.id;
+app.get("/read/", function(req, res) {
+    var id = req.query.id;
     console.log("id: " + id);
     var ret = kid.readKid(id);
     ret.then(function(ret2) {

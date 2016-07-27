@@ -22,8 +22,8 @@ app.post("/create/", function(req, res) {
     });
 });
 
-app.get("/read/:email", function(req, res) {
-    var email = req.params.email;
+app.get("/read/", function(req, res) {
+    var email = req.query.email;
     var ret = user.readUser(email);
     ret.then(function(ret2) {
         res.send(ret2)

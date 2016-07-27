@@ -22,8 +22,8 @@ app.post("/create/", function(req, res) {
     });
 });
 
-app.get("/read/:id", function(req, res) {
-    var id = req.params.id;
+app.get("/read/", function(req, res) {
+    var id = req.query.id;
     var ret = shopcart.readShopcart(id);
     ret.then(function(ret2) {
         res.send(ret2)
@@ -113,8 +113,8 @@ app.get("/getProducts/:shopcartId", function(req,res){
 	ret.then(function (ret2) {res.send(ret2)}, function (err){res.send(err)});
 });*/
 
-app.post("/getProducts/", function(req, res) {
-    var shopcartId = req.body.shopcartId
+app.get("/getProducts/", function(req, res) {
+    var shopcartId = req.query.shopcartId
     var ret = shopcart.getProducts(shopcartId);
     ret.then(function(ret2) {
         res.send(ret2)
