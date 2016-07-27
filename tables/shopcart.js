@@ -5,12 +5,6 @@ var UserTable;
 var ProductTable;
 var SupplierTable;
 var ShopCartProductTable;
-var resp;
-
-function setAdapter(adapter) {
-    Adapter = adapter;
-    setShopcart();
-}
 
 function setShopcart() {
     ShopcartTable = Adapter.ShopCart;
@@ -18,12 +12,14 @@ function setShopcart() {
     ProductTable = Adapter.Product;
 	SupplierTable = Adapter.Supplier;
 	ShopCartProductTable = Adapter.ShopCartProduct;
-    resp = [];
 }
 
 class Shopcart {
 
-    constructor() {}
+    constructor(adapter) {
+		Adapter = adapter;
+		setShopcart();
+	}
 
     //create
     createShopcart(shopcart) {
@@ -31,6 +27,7 @@ class Shopcart {
         var address = shopcart.address;
         var status = shopcart.status;
         var email = shopcart.email;
+		var resp = [];
         return new Promise(function(resolve, reject) {
             UserTable.find({
                 where: {
@@ -43,7 +40,6 @@ class Shopcart {
                 } else {
                     user.getHistory().then((shops) => {
                         var counter = 0;
-                        resp = [];
                         for (counter; counter < shops.length; counter++) {
                             var values = shops[counter].dataValues;
                             if (values.status == "Aberto") {
@@ -102,7 +98,8 @@ class Shopcart {
     };
 
     updateShopcart(id, date, address, status, email) {
-        return new Promise(function(resolve, reject) {
+		var resp = [];
+		return new Promise(function(resolve, reject) {
             ShopcartTable.update({
                 id: id,
                 date: date,
@@ -128,7 +125,6 @@ class Shopcart {
                         } else {
                             user.getHistory().then((shops) => {
                                 var count = 0;
-                                var resp = [];
                                 for (count; count < shops.length; shops++) {
                                     var v = shops[count].id;
                                     resp.push(v);
@@ -228,7 +224,6 @@ class Shopcart {
 	
     getProducts(id) {
 		var suppliers={};
-		var resp=[];
         return new Promise(function(resolve, reject) {
             ShopcartTable.find({
                 where: {
@@ -294,6 +289,5 @@ class Shopcart {
 
 
 module.exports = {
-    Shopcart: Shopcart,
-    setAdapter: setAdapter
+    Shopcart: Shopcart
 };

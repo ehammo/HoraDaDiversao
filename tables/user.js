@@ -2,18 +2,16 @@
 var Adapter;
 var UserTable;
 
-function setAdapter(adapter) {
-    Adapter = adapter;
-    setUser();
-}
-
 function setUser() {
     UserTable = Adapter.User;
 }
 
 class User {
 
-    constructor() {}
+    constructor(adapter) {
+		Adapter = adapter;
+		setUser();
+	}
 
     //create
     createUser(user) {
@@ -157,6 +155,5 @@ class User {
 
 
 module.exports = {
-    User: User,
-    setAdapter: setAdapter
+    User: User
 };

@@ -36,19 +36,12 @@ var ProductClass = require('./tables/product');
 var ShopcartClass = require('./tables/shopcart');
 var SupplierClass = require('./tables/supplier');
 
-UserClass.setAdapter(tables);
-KidClass.setAdapter(tables);
-//OrderClass.setAdapter(tables);
-ProductClass.setAdapter(tables);
-ShopcartClass.setAdapter(tables);
-SupplierClass.setAdapter(tables);
-
-var user = new UserClass.User();
-var kid = new KidClass.Kid();
+var user = new UserClass.User(tables);
+var kid = new KidClass.Kid(tables);
 //var order = new OrderClass.Order();
-var product = new ProductClass.Product();
-var shopcart = new ShopcartClass.Shopcart();
-var supplier = new SupplierClass.Supplier();
+var product = new ProductClass.Product(tables);
+var shopcart = new ShopcartClass.Shopcart(tables);
+var supplier = new SupplierClass.Supplier(tables);
 
 connection
     .authenticate()

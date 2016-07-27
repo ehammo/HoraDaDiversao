@@ -3,11 +3,6 @@ var Adapter;
 var ProductTable;
 var SupplierTable;
 
-function setAdapter(adapter) {
-    Adapter = adapter;
-    setProduct();
-}
-
 function setProduct() {
     ProductTable = Adapter.Product;
     SupplierTable = Adapter.Supplier;
@@ -15,7 +10,10 @@ function setProduct() {
 
 class Product {
 
-    constructor() {}
+    constructor(adapter) {
+		Adapter = adapter;
+		setProduct();
+	}
 
     //create
     createProduct(product) {
@@ -192,6 +190,5 @@ class Product {
 }
 
 module.exports = {
-    Product: Product,
-    setAdapter: setAdapter
+    Product: Product
 };

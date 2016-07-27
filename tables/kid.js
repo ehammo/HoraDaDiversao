@@ -3,11 +3,6 @@ var Adapter;
 var KidTable;
 var UserTable;
 
-function setAdapter(adapter) {
-    Adapter = adapter;
-    setKid();
-}
-
 function setKid() {
     KidTable = Adapter.Kid;
     UserTable = Adapter.User;
@@ -15,7 +10,10 @@ function setKid() {
 
 class Kid {
 
-    constructor() {}
+    constructor(adapter) {
+		Adapter = adapter;
+		setKid();
+	}
 
     //create
     createKid(name,gender, birth, user) {
@@ -170,6 +168,5 @@ class Kid {
 
 
 module.exports = {
-    Kid: Kid,
-    setAdapter: setAdapter
+    Kid: Kid
 };

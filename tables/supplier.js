@@ -2,18 +2,16 @@
 var Adapter;
 var SupplierTable;
 
-function setAdapter(adapter) {
-    Adapter = adapter;
-    setSupplier();
-}
-
 function setSupplier() {
     SupplierTable = Adapter.Supplier;
 }
 
 class Supplier {
 
-    constructor() {}
+    constructor(adapter) {
+		Adapter = adapter;
+		setSupplier();
+	}
 
     //create
     createSupplier(supplier) {
@@ -177,6 +175,5 @@ class Supplier {
 }
 
 module.exports = {
-    Supplier: Supplier,
-    setAdapter: setAdapter
+    Supplier: Supplier
 };
