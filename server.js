@@ -196,7 +196,7 @@ app.get("/genu", function(req, res) {
     var cart = {
         date: "",
         address: "",
-        status: "",
+        status: "Aberto",
         email: joao.email
     };
 
@@ -564,7 +564,31 @@ app.post("/shopcart/addProduct", function(req, res) {
     var qtd = req.body.qtd;
     console.log(qtd);
     var ret = shopcart.addProduct(productId, shopcartId, qtd);
-	connection.sync();
+    ret.then(function(ret2) {
+        res.send(ret2)
+    }, function(err) {
+        res.send(err)
+    })
+
+});
+
+app.post("/shopcart/removeProduct", function(req, res) {
+    var productId = req.body.productId;
+    var shopcartId = req.body.shopcartId;
+    var ret = shopcart.removeProduct(productId, shopcartId);
+    ret.then(function(ret2) {
+        res.send(ret2)
+    }, function(err) {
+        res.send(err)
+    })
+
+});
+
+app.post("/shopcart/updateProduct", function(req, res) {
+    var productId = req.body.productId;
+    var shopcartId = req.body.shopcartId;
+    var qtd = req.body.qtd
+	var ret = shopcart.updateProduct(productId, shopcartId,qtd);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {

@@ -15,8 +15,6 @@ module.exports = function(connection) {
         phone: Sequelize.STRING
     });
 
-    // TODO: nao precisa criar um id. o sequelize coloca um ID automatico auto incremental se nao tiver PK
-
     var Kid = connection.define('Kid', {
         name: Sequelize.STRING,
         gender: Sequelize.STRING,

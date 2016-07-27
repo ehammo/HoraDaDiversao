@@ -179,7 +179,53 @@ class Shopcart {
 
         });
     }
+//como belongs to many so me da os metodos: get, set, add(One),add(several) fiz o remove setando
+//nao testei ainda
+	removeProduct(idP, idS) {
+        return new Promise(function(resolve, reject) {
+            ShopcartTable.find({
+                where: {
+                    id: idS
+                }
+            }).then(function(shopcart) {
+                console.log(shopcart);
+                if (!shopcart) {
+                    console.log("error! no shopcart found");
+                    reject("error! no shopcart found");
+                } else {
+					ShopCartProductTable.destroy({where: {ShopCartId: idS, ProductId: idP}}).then(()=>{
+						resolve("Product removed with sucess");
+					});
+                }
+            });
 
+        });
+    }
+	
+	updateProduct(idP, idS,qtd) {
+        return new Promise(function(resolve, reject) {
+            ShopcartTable.find({
+                where: {
+                    id: idS
+                }
+            }).then(function(shopcart) {
+                console.log(shopcart);
+                if (!shopcart) {
+                    console.log("error! no shopcart found");
+                    reject("error! no shopcart found");
+                } else {
+					ShopCartProductTable.update({
+						qtd: qtd
+					},{
+						where: {ShopCartId: idS, ProductId: idP}
+					});
+					resolve("Product updated with sucess");
+                }
+            });
+
+        });
+    }
+	
     getProducts(id) {
 		var suppliers={};
 		var resp=[];
@@ -207,23 +253,6 @@ class Shopcart {
 						})
 						
 					});
-					
-					/*
-					var count = 0;
-					for(count;count<products.length;count++){
-						console.log(count);
-						console.log(product[count]);
-						SupplierTable.find({
-							where: {id:products[count].supplierId}
-						}).then(function(supplierX){
-							console.log(supplierX);
-							suppliers.push(supplierX)
-							
-						});
-					}*/
-					
-					
-                    
                 }
 
             });
