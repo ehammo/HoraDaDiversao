@@ -276,17 +276,6 @@ app.post("/user/delete", function(req, res) {
     });
 });
 
-app.post("/user/deleteRead", function(req, res) {
-    var email = req.body.email;
-
-    var ret = user.deleteUserRead(email);
-    ret.then(function(ret2) {
-        res.send(ret2)
-    }, function(err) {
-        res.send(err)
-    });
-});
-
 app.post("/user/check", function(req, res) {
     var email = req.body.email;
 	var pass = req.body.password;
