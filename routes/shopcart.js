@@ -114,8 +114,8 @@ app.get("/getProducts/:shopcartId", function(req,res){
 });*/
 
 app.get("/getProducts/", function(req, res) {
-    var shopcartId = req.query.shopcartId
-    var ret = shopcart.getProducts(shopcartId);
+    var id = req.query.id //shopcartId
+    var ret = shopcart.getProducts(id);
     ret.then(function(ret2) {
         res.send(ret2)
     }, function(err) {
