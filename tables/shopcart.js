@@ -214,8 +214,9 @@ class Shopcart {
 						qtd: qtd
 					},{
 						where: {ShopCartId: idS, ProductId: idP}
+					}).then(function(){
+						resolve("Product added with sucess")
 					});
-					resolve("Product updated with sucess");
                 }
             });
 
