@@ -125,7 +125,7 @@ class Shopcart {
                         } else {
                             user.getHistory().then((shops) => {
                                 var count = 0;
-                                for (count; count < shops.length; shops++) {
+                                for (count; count < shops.length; count++) {
                                     var v = shops[count].id;
                                     resp.push(v);
                                 }
